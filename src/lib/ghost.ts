@@ -21,6 +21,13 @@ export type GhostPost = {
   visibility: string;
 };
 
+export type GhostTag = {
+  id: string;
+  name: string;
+  slug: string;
+  count?: { posts: number };
+};
+
 export async function getLatestPosts(limit = 3): Promise<GhostPost[]> {
   try {
     const posts = await api.posts.browse({
@@ -56,5 +63,18 @@ export async function getPostBySlug(slug: string): Promise<GhostPost | null> {
     return post as unknown as GhostPost;
   } catch {
     return null;
+  }
+}
+
+export async function getAllTags(): Promise<GhostTag[]> {
+  try {
+    const tags = await api.tags.browse({
+      limit: "all",
+      include: "count.posts",
+    });
+    return tags as unknown as GhostTag[];
+  } catch (error) {
+    console.error("Ghost API tags error:", error);
+    return [];
   }
 }
