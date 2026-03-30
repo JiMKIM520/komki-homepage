@@ -61,7 +61,7 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
                   {/* 썸네일 */}
                   <div
                     className="relative overflow-hidden bg-[#e8d9c0]"
-                    style={{ flex: "1 1 0", aspectRatio: "4/3" }}
+                    style={{ flex: "1 1 0", aspectRatio: "16/10", minHeight: 0 }}
                   >
                     {post.feature_image ? (
                       <Image
