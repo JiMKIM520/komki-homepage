@@ -80,9 +80,15 @@ export default function HeroArticles({ posts }: { posts: GhostPost[] }) {
         <div className="flex-1 flex flex-col">
           {/* 카드 본체 */}
           <div
-            className="flex-1 flex"
+            className="flex-1 flex relative"
             style={{ backgroundColor: bg, transition: "background-color 0.4s ease" }}
           >
+            {/* FEATURED 뱃지 */}
+            <div className="absolute top-3 left-3 z-10">
+              <span className="bg-[#2d2416] text-[#fdf6ec] text-[7px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full">
+                Featured
+              </span>
+            </div>
             {/* 세로 태그 */}
             {tag && (
               <div className="w-8 shrink-0 flex items-center justify-center border-r border-black/10">
