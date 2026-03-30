@@ -26,8 +26,23 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
       onMouseLeave={() => setHoveredIndex(null)}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-8">
+        {/* 섹션 헤더 */}
+        <div className="flex items-center justify-between py-3 border-b border-[#e8d9c0] mb-px">
+          <span className="text-[10px] font-extrabold text-[#2d2416] tracking-[0.2em] uppercase">
+            New Topics
+          </span>
+          <a
+            href={process.env.NEXT_PUBLIC_GHOST_URL || "https://www.komki.co.kr"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[8px] text-[#b8a898] hover:text-[#d97706] transition-colors"
+          >
+            view all →
+          </a>
+        </div>
+
         {/* 1px 그리드 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-[#e8d9c0]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[2px] bg-[#2d2416]">
           {posts.map((post, i) => {
             const tag = post.tags?.[0];
             const isHovered = hoveredIndex === i;
@@ -140,22 +155,6 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
               </Link>
             );
           })}
-        </div>
-
-        {/* 전체 보기 */}
-        <div className="mt-px bg-[#e8d9c0]">
-          <div className="bg-[#fdf6ec] py-5 text-center">
-            <Link
-              href={
-                process.env.NEXT_PUBLIC_GHOST_URL || "https://www.komki.co.kr"
-              }
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-[#c8b8a2] hover:text-[#d97706] transition-colors"
-            >
-              전체 아티클 보기 →
-            </Link>
-          </div>
         </div>
       </div>
     </section>
