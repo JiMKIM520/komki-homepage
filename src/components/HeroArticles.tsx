@@ -102,7 +102,7 @@ export default function HeroArticles({ posts }: { posts: GhostPost[] }) {
             )}
 
             {/* 썸네일 */}
-            <div className="relative w-[42%] md:w-[48%] shrink-0 overflow-hidden" style={{ aspectRatio: "3/4" }}>
+            <div className="relative w-[42%] md:w-[48%] shrink-0 overflow-hidden">
               {post.feature_image ? (
                 <Image
                   src={post.feature_image}
