@@ -127,7 +127,7 @@ export default function SubscribeForm({
   return (
     <div>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {/* 이메일 input — border-bottom only 스타일 (피그마 준수) */}
+        {/* 이메일 input — 시안 stroke 박스 */}
         <label className="block">
           <span className="sr-only">이메일 주소</span>
           <input
@@ -136,7 +136,7 @@ export default function SubscribeForm({
             onChange={(e) => setEmail(e.target.value)}
             placeholder="이메일을 입력해 주세요."
             required
-            className="w-full px-1 py-3 text-sm md:text-base rounded-none border-0 border-b border-black bg-transparent text-black placeholder-[#3F1C03]/50 focus:outline-none focus:border-black transition-colors"
+            className="w-full px-4 py-3 font-paperlogy text-sm md:text-base rounded-none border-[3px] border-black bg-white text-black placeholder-[#3F1C03]/50 focus:outline-none focus:border-black transition-colors"
           />
         </label>
 
@@ -160,13 +160,13 @@ export default function SubscribeForm({
         <button
           type="submit"
           disabled={status === "loading"}
-          className="mt-2 px-7 py-3.5 text-sm md:text-base font-bold border-2 border-black rounded-none bg-transparent text-black hover:bg-black hover:text-[#FBF8F1] disabled:opacity-60 transition-colors duration-200"
+          className="mt-2 px-7 py-3.5 font-paperlogy text-sm md:text-base font-semibold border-[3px] border-black rounded-none bg-black text-[#FBF8F1] hover:bg-[#3F1C03] disabled:opacity-60 transition-colors duration-200"
         >
           {status === "loading" ? "처리 중..." : "구독하기"}
         </button>
       </form>
       {status === "error" && (
-        <p className="mt-3 text-sm text-red-500">{errorMsg}</p>
+        <p className="mt-3 font-paperlogy text-sm text-red-500">{errorMsg}</p>
       )}
     </div>
   );
@@ -203,7 +203,7 @@ function ConsentCheckbox({
           </svg>
         )}
       </span>
-      <span className="text-xs md:text-sm text-[#3F1C03]">{label}</span>
+      <span className="font-paperlogy text-xs md:text-sm text-[#3F1C03]">{label}</span>
     </label>
   );
 }

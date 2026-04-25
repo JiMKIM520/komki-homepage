@@ -9,6 +9,7 @@ const CATEGORIES = [
   { label: "AI", href: "/articles?tag=ai" },
   { label: "Marketing", href: "/articles?tag=marketing" },
   { label: "Trend", href: "/articles?tag=trend" },
+  { label: "콤키 스페셜", href: "/articles?tag=special" },
 ] as const;
 
 export default function Navbar() {
@@ -126,7 +127,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen((v) => !v)}
-                  className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-[#FBF8F1]/90 hover:text-[#FBF8F1] transition-colors"
+                  className="inline-flex items-center gap-2 text-sm md:text-base font-noto-sans font-medium text-[#FBF8F1]/90 hover:text-[#FBF8F1] transition-colors"
                   aria-expanded={dropdownOpen}
                   aria-haspopup="menu"
                 >
@@ -154,7 +155,7 @@ export default function Navbar() {
                         key={item.label}
                         href={item.href}
                         role="menuitem"
-                        className="block px-4 py-2 text-sm hover:bg-[#3F1C03]/10 transition-colors"
+                        className="block px-4 py-2 text-sm font-noto-sans font-medium hover:bg-[#3F1C03]/10 transition-colors"
                         onClick={() => setDropdownOpen(false)}
                       >
                         {item.label}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Noto_Sans_KR, Wendy_One } from "next/font/google";
+import { Playfair_Display, Noto_Sans_KR, Wendy_One, DM_Serif_Text, Bungee, Noto_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -20,6 +21,37 @@ const wendyOne = Wendy_One({
   variable: "--font-brand",
   subsets: ["latin"],
   weight: ["400"],
+  display: "swap",
+});
+
+const dmSerifText = DM_Serif_Text({
+  variable: "--font-dm-serif",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const bungee = Bungee({
+  variable: "--font-bungee",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const notoSans = Noto_Sans({
+  variable: "--font-noto-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const paperlogy = localFont({
+  src: [
+    { path: "../../public/fonts/paperlogy/Paperlogy-4Regular.woff2", weight: "400", style: "normal" },
+    { path: "../../public/fonts/paperlogy/Paperlogy-5Medium.woff2", weight: "500", style: "normal" },
+    { path: "../../public/fonts/paperlogy/Paperlogy-6SemiBold.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-paperlogy",
   display: "swap",
 });
 
@@ -52,7 +84,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${playfair.variable} ${notoSansKR.variable} ${wendyOne.variable}`}>
+    <html
+      lang="ko"
+      className={`${playfair.variable} ${notoSansKR.variable} ${wendyOne.variable} ${dmSerifText.variable} ${bungee.variable} ${notoSans.variable} ${paperlogy.variable}`}
+    >
       <body className="antialiased">{children}</body>
     </html>
   );

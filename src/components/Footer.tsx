@@ -8,12 +8,12 @@ export default function Footer() {
       <section id="subscribe" className="bg-[#FBF8F1] py-14 md:py-20">
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row gap-10 md:gap-16 md:items-center">
           <div className="flex-1">
-            <p className="font-serif font-black text-2xl md:text-3xl lg:text-4xl leading-snug text-black">
+            <p className="font-paperlogy font-semibold text-2xl md:text-3xl lg:text-4xl leading-snug text-black">
               사장님이라면
               <br />
               꼭 챙겨야할 인사이트 !
             </p>
-            <p className="mt-4 text-base md:text-lg text-[#3F1C03] leading-relaxed">
+            <p className="mt-4 font-paperlogy text-base md:text-lg text-[#3F1C03] leading-relaxed">
               5일에 한 번 메일로 트렌드 한 입 !
             </p>
           </div>
@@ -43,15 +43,12 @@ export default function Footer() {
                 KOMKI
               </p>
               <div className="mt-7 md:mt-9 flex items-baseline gap-3">
-                <h3 className="font-serif font-bold text-xl md:text-2xl">About</h3>
-                <span
-                  className="text-xl md:text-2xl"
-                  style={{ fontFamily: "var(--font-brand)" }}
-                >
+                <h3 className="font-dm-serif text-2xl md:text-3xl">About</h3>
+                <span className="font-dm-serif text-2xl md:text-3xl">
                   KOMPA
                 </span>
               </div>
-              <div className="mt-3 space-y-1 text-xs md:text-sm text-[#FBF8F1]/70 leading-relaxed">
+              <div className="mt-3 space-y-1 font-paperlogy text-xs md:text-sm text-[#FBF8F1]/70 leading-relaxed">
                 <p>
                   광고 제휴 문의{" "}
                   <a

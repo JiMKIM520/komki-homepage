@@ -13,10 +13,10 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
   return (
     <section id="articles" className="py-14 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* 섹션 헤더 — NEW 알약 */}
+        {/* 섹션 헤더 — 모든 콘텐츠 알약 */}
         <div className="mb-8 md:mb-10">
-          <span className="inline-flex items-center bg-black text-[#FBF8F1] text-sm md:text-base font-bold tracking-wider rounded-full px-5 py-2">
-            NEW
+          <span className="inline-flex items-center bg-black text-[#FBF8F1] text-sm md:text-base font-paperlogy font-semibold tracking-wide rounded-full px-5 py-2">
+            모든 콘텐츠
           </span>
         </div>
 
@@ -45,23 +45,25 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
                   </div>
                 )}
               </div>
-              <h3 className="mt-4 font-serif font-bold text-base md:text-lg leading-snug text-black line-clamp-2 text-left max-w-[70%] transition-colors group-hover:text-[#3F1C03]">
+              <h3 className="mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 text-left max-w-[70%] transition-colors group-hover:text-[#3F1C03]">
                 {post.title}
               </h3>
             </Link>
           ))}
         </div>
 
-        {/* 더보기 버튼 */}
+        {/* 더보기 버튼 — 외곽 stroke 박스 + 내부 알약 (시안 Rectangle 32) */}
         <div className="mt-12 md:mt-16 flex justify-center">
-          <a
-            href={viewAllHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border-2 border-black rounded-full px-7 py-3 text-sm md:text-base font-bold tracking-wide text-black hover:bg-black hover:text-[#FBF8F1] transition-colors"
-          >
-            더보기 <span className="text-base leading-none">+</span>
-          </a>
+          <div className="border-[3px] border-black rounded-full p-1.5">
+            <a
+              href={viewAllHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border-2 border-black rounded-full px-7 py-3 font-paperlogy text-sm md:text-base font-semibold tracking-wide text-black hover:bg-black hover:text-[#FBF8F1] transition-colors"
+            >
+              더보기 <span className="text-base leading-none">+</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

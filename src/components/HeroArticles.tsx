@@ -9,7 +9,7 @@ type Props = { posts: GhostPost[] };
 
 const ROTATE_INTERVAL = 4000;
 const FADE_MS = 1200;
-const PREVIEW_CHARS = 120;
+const PREVIEW_CHARS = 200;
 
 export default function HeroArticles({ posts }: Props) {
   const [index, setIndex] = useState(0);
@@ -68,7 +68,7 @@ export default function HeroArticles({ posts }: Props) {
           aspect="min-h-[3rem]"
           className="mt-6 px-6"
           render={(p) => (
-            <h2 className="font-serif font-black text-xl leading-tight text-[#FBF8F1] text-center line-clamp-2">
+            <h2 className="font-paperlogy font-semibold text-xl leading-tight text-[#FBF8F1] text-center line-clamp-2">
               {p.title}
             </h2>
           )}
@@ -233,19 +233,19 @@ function renderContent(post: GhostPost) {
     >
       {/* 제목 — 검정 배경 */}
       <div className="bg-black text-white px-6 lg:px-8 py-6 lg:py-7">
-        <h2 className="font-serif font-black text-xl lg:text-[28px] leading-tight line-clamp-3">
+        <h2 className="font-paperlogy font-semibold text-xl lg:text-[28px] leading-tight line-clamp-3">
           {post.title}
         </h2>
       </div>
       {/* 본문 + 읽어보기 */}
       <div className="flex-1 flex flex-col px-6 lg:px-8 py-6 lg:py-8 min-h-0">
         {preview && (
-          <p className="mt-3 lg:mt-4 text-sm lg:text-base text-black leading-relaxed line-clamp-6">
+          <p className="mt-3 lg:mt-4 font-paperlogy text-sm lg:text-base text-black leading-relaxed line-clamp-6">
             {preview}
           </p>
         )}
         <div className="mt-auto pt-4 flex justify-end">
-          <span className="inline-flex items-center gap-1.5 text-sm lg:text-base font-bold tracking-wide bg-black text-white rounded-full px-5 lg:px-6 py-2 lg:py-2.5">
+          <span className="inline-flex items-center gap-1.5 font-paperlogy text-sm lg:text-base font-semibold tracking-wide bg-black text-white rounded-full px-5 lg:px-6 py-2 lg:py-2.5">
             읽어보기 →
           </span>
         </div>
