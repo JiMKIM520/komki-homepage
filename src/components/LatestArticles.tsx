@@ -8,7 +8,7 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
   const grid = posts.slice(0, 6);
   if (grid.length === 0) return null;
 
-  const viewAllHref = process.env.NEXT_PUBLIC_GHOST_URL || "https://www.komki.co.kr";
+  const viewAllHref = "/articles";
 
   return (
     <section id="articles" className="py-14 md:py-20 bg-white">
@@ -20,8 +20,8 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
           </span>
         </div>
 
-        {/* 3×2 그리드 — 이미지 + 제목만 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-10 md:gap-x-8 md:gap-y-14">
+        {/* 데스크톱: 3×2 그리드 */}
+        <div className="hidden md:grid md:grid-cols-3 gap-x-8 gap-y-14">
           {grid.map((post) => (
             <Link
               key={post.id}
@@ -37,7 +37,7 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
                     alt={post.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 1024px) 50vw, 33vw"
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center text-black/30 text-5xl font-black">
@@ -52,17 +52,49 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
           ))}
         </div>
 
-        {/* 더보기 버튼 — 외곽 stroke 박스 + 내부 알약 (시안 Rectangle 32) */}
-        <div className="mt-12 md:mt-16 flex justify-center">
-          <div className="border-[3px] border-black rounded-full p-1.5">
-            <a
-              href={viewAllHref}
+        {/* 모바일: 2행 가로 스크롤 + 검정 제목박스 카드 (고정 높이) */}
+        <div className="md:hidden -mx-4 px-4 grid grid-rows-2 grid-flow-col auto-cols-[45%] gap-x-3 gap-y-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
+          {grid.map((post) => (
+            <Link
+              key={post.id}
+              href={post.url}
               target="_blank"
               rel="noopener noreferrer"
+              className="snap-start block"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden">
+                {post.feature_image ? (
+                  <Image
+                    src={post.feature_image}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                    sizes="45vw"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-black/30 text-5xl font-black">
+                    komki
+                  </div>
+                )}
+              </div>
+              <div className="bg-black px-3 py-3 h-[72px] flex items-start">
+                <h3 className="font-paperlogy font-medium text-xs text-[#FBF8F1] leading-snug line-clamp-3">
+                  {post.title}
+                </h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        {/* 더보기 버튼 — 외곽 stroke 박스 + 내부 알약 */}
+        <div className="mt-12 md:mt-16 flex justify-center">
+          <div className="border-[3px] border-black rounded-full p-1.5">
+            <Link
+              href={viewAllHref}
               className="inline-flex items-center gap-2 border-2 border-black rounded-full px-7 py-3 font-paperlogy text-sm md:text-base font-semibold tracking-wide text-black hover:bg-black hover:text-[#FBF8F1] transition-colors"
             >
               더보기 <span className="text-base leading-none">+</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

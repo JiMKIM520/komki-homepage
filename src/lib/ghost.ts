@@ -51,6 +51,39 @@ export async function getPostBySlug(slug: string): Promise<GhostPost | null> {
   }
 }
 
+export async function getPostsByTag(tagSlug: string, limit = 50): Promise<GhostPost[]> {
+  try {
+    const posts = await api.posts.browse({
+      limit,
+      include: ["tags", "authors"],
+      filter: `visibility:public+tag:${tagSlug}`,
+      formats: ["plaintext"],
+    });
+    return posts as unknown as GhostPost[];
+  } catch (error) {
+    console.error("Ghost API tag filter error:", error);
+    return [];
+  }
+}
+
+export async function searchPosts(query: string, limit = 50): Promise<GhostPost[]> {
+  const q = query.trim();
+  if (!q) return [];
+  try {
+    const escaped = q.replace(/'/g, "\\'");
+    const posts = await api.posts.browse({
+      limit,
+      include: ["tags", "authors"],
+      filter: `visibility:public+(title:~'${escaped}',plaintext:~'${escaped}')`,
+      formats: ["plaintext"],
+    });
+    return posts as unknown as GhostPost[];
+  } catch (error) {
+    console.error("Ghost API search error:", error);
+    return [];
+  }
+}
+
 export async function getAllTags(): Promise<GhostTag[]> {
   try {
     const tags = await api.tags.browse({

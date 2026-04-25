@@ -9,7 +9,7 @@ const CATEGORIES = [
   { label: "AI", href: "/articles?tag=ai" },
   { label: "Marketing", href: "/articles?tag=marketing" },
   { label: "Trend", href: "/articles?tag=trend" },
-  { label: "콤키 스페셜", href: "/articles?tag=special" },
+  { label: "콤키 스페셜", href: "/articles?tag=seupesyeol" },
 ] as const;
 
 export default function Navbar() {
@@ -96,7 +96,7 @@ export default function Navbar() {
 
       {/* ── 메인 Navbar (sticky) ── */}
       <header className="sticky top-0 z-40 bg-black text-[#FBF8F1]">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-2 md:gap-4 relative">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-12 md:h-14 flex items-center justify-between gap-2 md:gap-4 relative">
           {/* 좌측: 햄버거(mobile) / 로고 + 콘텐츠 보기 드롭다운(desktop) */}
           <div className="flex items-center gap-3">
             {/* 모바일 햄버거 */}
@@ -188,7 +188,7 @@ export default function Navbar() {
             {/* 데스크톱 검색 input */}
             <form
               onSubmit={submitSearch}
-              className="hidden md:flex items-center bg-white rounded-full pl-4 pr-1 h-10 w-[300px]"
+              className="hidden md:flex items-center bg-white rounded-full pl-4 pr-1 h-8 w-[240px]"
             >
               <input
                 type="text"

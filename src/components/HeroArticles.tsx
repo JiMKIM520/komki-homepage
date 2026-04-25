@@ -38,7 +38,7 @@ export default function HeroArticles({ posts }: Props) {
       aria-label="주요 콘텐츠"
     >
       {/* ─── 데스크톱: 3슬롯 ─── */}
-      <div className="hidden md:flex max-w-[1600px] mx-auto px-6 lg:px-10 pt-16 lg:pt-28 pb-8 lg:pb-12 gap-5 lg:gap-8 items-center justify-center">
+      <div className="hidden md:flex max-w-[1600px] mx-auto px-6 lg:px-10 pt-8 lg:pt-12 pb-4 lg:pb-6 gap-5 lg:gap-8 items-center justify-center">
         <Slot post={left} aspect="aspect-[4/5]" className="shrink-0 w-[18%] max-w-[280px]" render={renderSide} />
         {/* 가운데: 포스터 위(z-10), 내용박스는 살짝 아래+겹치게 layered 배치 */}
         <div className="shrink-0 w-[52%] max-w-[880px] flex">
@@ -56,12 +56,12 @@ export default function HeroArticles({ posts }: Props) {
         onSelect={(i) => setIndex((i - 1 + n) % n)}
       />
 
-      {/* ─── 모바일: peek carousel (중앙 1 + 좌우 엿보이기) ─── */}
-      <div className="md:hidden pt-10">
-        <div className="flex items-center justify-center gap-3 px-4">
-          <Slot post={left} aspect="aspect-[4/5]" className="shrink-0 w-[15%] opacity-50 pointer-events-none select-none" render={renderMobilePeek} />
-          <Slot post={center} aspect="aspect-[4/5]" className="shrink-0 w-[66%]" render={renderMobileCenter} />
-          <Slot post={right} aspect="aspect-[4/5]" className="shrink-0 w-[15%] opacity-50 pointer-events-none select-none" render={renderMobilePeek} />
+      {/* ─── 모바일: peek carousel (중앙 + 좌우 큰 포스터가 화면 밖으로 잘림) ─── */}
+      <div className="md:hidden pt-6 overflow-hidden">
+        <div className="flex items-center justify-center gap-3">
+          <Slot post={left} aspect="aspect-[4/5]" className="shrink-0 w-[45%] opacity-60 pointer-events-none select-none" render={renderMobilePeek} />
+          <Slot post={center} aspect="aspect-[4/5]" className="shrink-0 w-[70%]" render={renderMobileCenter} />
+          <Slot post={right} aspect="aspect-[4/5]" className="shrink-0 w-[45%] opacity-60 pointer-events-none select-none" render={renderMobilePeek} />
         </div>
         <Slot
           post={center}
@@ -146,7 +146,7 @@ function Dots({
   onSelect: (i: number) => void;
 }) {
   return (
-    <div className={`justify-center gap-2 pt-6 pb-12 ${className}`}>
+    <div className={`justify-center gap-2 pt-3 pb-6 ${className}`}>
       {posts.map((p, i) => {
         const isActive = i === activeCenterIndex;
         return (
