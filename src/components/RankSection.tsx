@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { GhostPost } from "@/lib/ghost";
+import { GhostPost } from "@/lib/ghost-types";
+
+function badgeLabel(tagName: string): string {
+  const lc = tagName.toLowerCase();
+  if (lc.includes("ai")) return "AI";
+  if (lc.includes("market")) return "Marketing";
+  if (lc.includes("trend") || tagName.includes("트렌드")) return "Trend";
+  return tagName;
+}
 
 export default function RankSection({ posts }: { posts: GhostPost[] }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -12,76 +19,52 @@ export default function RankSection({ posts }: { posts: GhostPost[] }) {
   if (ranked.length === 0) return null;
 
   return (
-    <section className="py-6" onMouseLeave={() => setHoveredIndex(null)}>
+    <section className="py-14 md:py-20 bg-white" onMouseLeave={() => setHoveredIndex(null)}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* 섹션 헤더 */}
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-[10px] font-extrabold text-[#2d2416] tracking-[0.2em] uppercase">
-            Rank Top 5
-          </span>
-          <span className="text-[7px] font-bold bg-[#d97706] text-white px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-            Hot
+        {/* 섹션 라벨 — 검정 알약 */}
+        <div className="mb-6 md:mb-8">
+          <span className="inline-flex items-center bg-black text-[#FBF8F1] text-sm md:text-base font-bold tracking-wide rounded-full px-5 py-2">
+            지금 뜨는 콘텐츠
           </span>
         </div>
 
-        {/* 랭킹 리스트 */}
-        <div className="flex flex-col gap-[2px] bg-[#2d2416]">
+        {/* 랭킹 리스트 — 볼드 + 굵은 선 + 좁은 간격 */}
+        <ul className="border-y-[3px] border-black">
           {ranked.map((post, i) => {
             const tag = post.tags?.[0];
             const isHovered = hoveredIndex === i;
-
+            const isLast = i === ranked.length - 1;
             return (
-              <Link
-                key={post.id}
-                href={post.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={() => setHoveredIndex(i)}
-                className="flex items-center gap-3 px-3 py-2.5 transition-colors duration-200"
-                style={{ backgroundColor: isHovered ? "#fde68a" : "#fdf6ec" }}
-              >
-                {/* 순위 */}
-                <span
-                  className="font-mono text-lg font-black w-6 text-center shrink-0"
-                  style={{ color: i === 0 ? "#d97706" : "#2d2416" }}
+              <li key={post.id} className={isLast ? "" : "border-b-2 border-black"}>
+                <Link
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  className="flex items-center gap-4 md:gap-8 py-2.5 md:py-3 transition-colors duration-200"
+                  style={{
+                    color: isHovered ? "#3F1C03" : "#000000",
+                    opacity: isHovered ? 0.8 : 1,
+                  }}
                 >
-                  {i + 1}
-                </span>
+                  <span className="font-serif font-black text-2xl md:text-3xl w-10 md:w-12 shrink-0 tabular-nums">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
 
-                {/* 썸네일 */}
-                <div className="relative w-8 h-8 rounded-md overflow-hidden shrink-0 bg-[#e8d9c0]">
-                  {post.feature_image ? (
-                    <Image
-                      src={post.feature_image}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                      sizes="32px"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="font-mono text-[10px] font-bold text-[#d9c9b0]">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* 제목 + 메타 */}
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-[#2d2416] truncate">
+                  <p className="flex-1 min-w-0 text-sm md:text-base font-bold truncate">
                     {post.title}
                   </p>
-                  <p className="text-[10px] text-[#b8a898] mt-0.5">
-                    {post.reading_time > 0 && `${post.reading_time}min`}
-                    {post.reading_time > 0 && tag && " · "}
-                    {tag && tag.name.toUpperCase()}
-                  </p>
-                </div>
-              </Link>
+
+                  {tag && (
+                    <span className="shrink-0 text-[10px] md:text-xs font-bold uppercase tracking-wider text-[#FBF8F1] bg-black rounded-full px-3 md:px-4 py-1 md:py-1.5">
+                      {badgeLabel(tag.name)}
+                    </span>
+                  )}
+                </Link>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </section>
   );

@@ -1,4 +1,9 @@
+import "server-only";
 import GhostContentAPI from "@tryghost/content-api";
+import type { GhostPost, GhostTag } from "./ghost-types";
+
+export type { GhostPost, GhostTag };
+export { getPreview } from "./ghost-types";
 
 const api = new GhostContentAPI({
   url: process.env.GHOST_URL!,
@@ -6,40 +11,20 @@ const api = new GhostContentAPI({
   version: "v5.0",
 });
 
-export type GhostPost = {
-  id: string;
-  title: string;
-  slug: string;
-  url: string;
-  excerpt: string | null;
-  feature_image: string | null;
-  feature_image_alt: string | null;
-  published_at: string | null;
-  reading_time: number;
-  tags: Array<{ id: string; name: string; slug: string }>;
-  authors: Array<{ id: string; name: string; slug: string; profile_image: string | null }>;
-  visibility: string;
-};
-
-export type GhostTag = {
-  id: string;
-  name: string;
-  slug: string;
-  count?: { posts: number };
-};
-
 export async function getLatestPosts(limit = 3): Promise<GhostPost[]> {
   try {
     const posts = await api.posts.browse({
       limit,
       include: ["tags", "authors"],
       filter: "visibility:public",
+      formats: ["plaintext"],
       fields: [
         "id",
         "title",
         "slug",
         "url",
         "excerpt",
+        "plaintext",
         "feature_image",
         "feature_image_alt",
         "published_at",

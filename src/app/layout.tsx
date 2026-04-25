@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Noto_Sans_KR } from "next/font/google";
+import { Playfair_Display, Noto_Sans_KR, Wendy_One } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -13,6 +13,13 @@ const notoSansKR = Noto_Sans_KR({
   variable: "--font-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const wendyOne = Wendy_One({
+  variable: "--font-brand",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -45,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${playfair.variable} ${notoSansKR.variable}`}>
+    <html lang="ko" className={`${playfair.variable} ${notoSansKR.variable} ${wendyOne.variable}`}>
       <body className="antialiased">{children}</body>
     </html>
   );

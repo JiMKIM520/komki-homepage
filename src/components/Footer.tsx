@@ -1,53 +1,75 @@
-import Link from "next/link";
+import Image from "next/image";
 import SubscribeForm from "./SubscribeForm";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#e8d9c0]">
-      {/* 브랜드 소개 + 구독 CTA */}
-      <div id="subscribe" className="bg-[#2d2416] px-6 py-24 text-center">
-        <p className="text-xs text-[#d97706] uppercase tracking-widest mb-6">
-          매주 화요일 발행
-        </p>
-        <h2 className="font-serif text-4xl md:text-6xl text-[#fdf6ec] mb-4 tracking-tight leading-tight">
-          komki
-        </h2>
-        <p className="text-lg md:text-xl text-[#b8a898] mb-4 leading-relaxed max-w-md mx-auto font-light">
-          창업자가 놓치면 안 되는
-          <br />
-          비즈니스 인사이트
-        </p>
-        <p className="text-sm text-[#8b7355] mb-12 max-w-sm mx-auto leading-relaxed">
-          복잡한 정보는 걷어내고,
-          진짜 중요한 것들만 골라서 — 단 5분.
-        </p>
-        <div className="max-w-md mx-auto">
-          <SubscribeForm source="footer" variant="dark" />
+    <footer>
+      {/* ── 구독 섹션 ── */}
+      <section id="subscribe" className="bg-[#FBF8F1] py-14 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row gap-10 md:gap-16 md:items-center">
+          <div className="flex-1">
+            <p className="font-serif font-black text-2xl md:text-3xl lg:text-4xl leading-snug text-black">
+              사장님이라면
+              <br />
+              꼭 챙겨야할 인사이트 !
+            </p>
+            <p className="mt-4 text-base md:text-lg text-[#3F1C03] leading-relaxed">
+              5일에 한 번 메일로 트렌드 한 입 !
+            </p>
+          </div>
+          <div className="flex-1 md:max-w-md w-full">
+            <SubscribeForm source="footer" variant="default" />
+          </div>
         </div>
-        <p className="mt-5 text-xs text-[#5c4a2f]">
-          무료 · 언제든 구독 취소 가능
-        </p>
-      </div>
+      </section>
 
-      {/* 플레이풀 Footer */}
-      <div className="bg-[#fdf6ec] border-t border-[#e8d9c0] py-10 text-center">
-        <p className="font-serif text-4xl md:text-5xl font-black text-[#2d2416] tracking-widest">
-          KOMKI
-        </p>
-        <p className="text-[10px] font-semibold text-[#d97706] tracking-[0.2em] mt-2">
-          &apos;read&apos; enjoy yourself!
-        </p>
-        <div className="mt-6 flex items-center justify-center gap-6 text-xs text-[#b8a898]">
-          <Link href="/privacy" className="hover:text-[#8b7355] transition-colors">
-            개인정보처리방침
-          </Link>
-          <a
-            href="mailto:hello@komki.co.kr"
-            className="hover:text-[#8b7355] transition-colors"
-          >
-            hello@komki.co.kr
-          </a>
-          <span>© {new Date().getFullYear()} komki</span>
+      {/* ── 하단 Footer (검정) ── */}
+      <div className="bg-black text-[#FBF8F1]">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16 flex flex-col md:flex-row md:items-end justify-between gap-10">
+          {/* 좌: 브랜드 로고 + About KOMPA */}
+          <div className="flex items-start gap-6 md:gap-8">
+            <Image
+              src="/brand-logo.svg"
+              alt="komki"
+              width={110}
+              height={118}
+              className="brightness-0 invert shrink-0"
+            />
+            <div>
+              <p
+                className="text-4xl md:text-5xl leading-none text-[#FBF8F1]"
+                style={{ fontFamily: "var(--font-brand)" }}
+              >
+                KOMKI
+              </p>
+              <div className="mt-7 md:mt-9 flex items-baseline gap-3">
+                <h3 className="font-serif font-bold text-xl md:text-2xl">About</h3>
+                <span
+                  className="text-xl md:text-2xl"
+                  style={{ fontFamily: "var(--font-brand)" }}
+                >
+                  KOMPA
+                </span>
+              </div>
+              <div className="mt-3 space-y-1 text-xs md:text-sm text-[#FBF8F1]/70 leading-relaxed">
+                <p>
+                  광고 제휴 문의{" "}
+                  <a
+                    href="mailto:kompa@marketing.or.kr"
+                    className="hover:text-[#FBF8F1] transition-colors"
+                  >
+                    kompa@marketing.or.kr
+                  </a>
+                </p>
+                <p>서울시 종로구 종로 325, 글라스타워 702호</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 우: 카피라이트 */}
+          <p className="text-xs md:text-sm text-[#FBF8F1]/50 shrink-0">
+            KOMKI © {new Date().getFullYear()} KOMPA. All Rights Reserved.
+          </p>
         </div>
       </div>
     </footer>
