@@ -26,7 +26,10 @@ export default async function ArticlesPage({
 }) {
   const params = await searchParams;
   const tag = params.tag ?? "";
-  const posts = tag ? await getPostsByTag(tag, 50) : await getLatestPosts(50);
+  // 모든 콘텐츠 뷰에서는 스페셜 태그(seupesyeol) 제외 — 콤키 스페셜 칩에서만 노출
+  const posts = tag
+    ? await getPostsByTag(tag, 50)
+    : await getLatestPosts(50, "seupesyeol");
   const activeLabel = TAGS.find((t) => t.value === tag)?.label ?? "모든 콘텐츠";
 
   return (

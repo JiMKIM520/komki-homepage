@@ -11,12 +11,15 @@ const api = new GhostContentAPI({
   version: "v5.0",
 });
 
-export async function getLatestPosts(limit = 3): Promise<GhostPost[]> {
+export async function getLatestPosts(limit = 3, excludeTag?: string): Promise<GhostPost[]> {
   try {
+    const filter = excludeTag
+      ? `visibility:public+tag:-${excludeTag}`
+      : "visibility:public";
     const posts = await api.posts.browse({
       limit,
       include: ["tags", "authors"],
-      filter: "visibility:public",
+      filter,
       formats: ["plaintext"],
       fields: [
         "id",
