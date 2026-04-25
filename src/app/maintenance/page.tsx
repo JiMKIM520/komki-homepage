@@ -15,7 +15,7 @@ export default function MaintenancePage() {
         width={140}
         height={150}
         priority
-        className="opacity-90 mb-10"
+        className="brightness-0 opacity-90 mb-10"
       />
       <p
         className="text-5xl md:text-7xl text-black mb-6"

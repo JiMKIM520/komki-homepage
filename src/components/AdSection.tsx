@@ -2,36 +2,47 @@ import Image from "next/image";
 import Link from "next/link";
 import { getPostsByTag } from "@/lib/ghost";
 
-// Ghost에 special 태그 콘텐츠가 없을 때 사용할 fallback placeholder.
 const PLACEHOLDERS: ReadonlyArray<{
-  id: string;
+  key: string;
   bg: string;
   label: string;
   title: string;
 }> = [
-  {
-    id: "ph-1",
-    bg: "#FFAC2F",
-    label: "Editor's Pick",
-    title: "에디터가 직접 고른\n이달의 인사이트",
-  },
-  {
-    id: "ph-2",
-    bg: "#5ABAC5",
-    label: "Special Series",
-    title: "사장님이 꼭 챙겨야 할\n시리즈 콘텐츠",
-  },
-  {
-    id: "ph-3",
-    bg: "#FFC4C4",
-    label: "Editor Interview",
-    title: "이달의 브랜드,\n에디터 인터뷰",
-  },
+  { key: "ph-1", bg: "#FFAC2F", label: "Editor's Pick", title: "에디터가 직접 고른\n이달의 인사이트" },
+  { key: "ph-2", bg: "#5ABAC5", label: "Special Series", title: "사장님이 꼭 챙겨야 할\n시리즈 콘텐츠" },
+  { key: "ph-3", bg: "#FFC4C4", label: "Editor Interview", title: "이달의 브랜드,\n에디터 인터뷰" },
 ];
+
+type CardData = {
+  key: string;
+  href: string;
+  external: boolean;
+  image: string | null;
+  title: string;
+  label?: string;
+  bg?: string;
+};
 
 export default async function AdSection() {
   const specials = await getPostsByTag("seupesyeol", 3);
-  const useFallback = specials.length === 0;
+  const items: CardData[] =
+    specials.length === 0
+      ? PLACEHOLDERS.map((ph) => ({
+          key: ph.key,
+          href: "#",
+          external: false,
+          image: null,
+          title: ph.title,
+          label: ph.label,
+          bg: ph.bg,
+        }))
+      : specials.map((post) => ({
+          key: post.id,
+          href: post.url,
+          external: true,
+          image: post.feature_image,
+          title: post.title,
+        }));
 
   return (
     <section className="py-14 md:py-20 bg-white">
@@ -43,60 +54,56 @@ export default async function AdSection() {
           </span>
         </div>
 
-        {/* 3개 썸네일 그리드 (4:3) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
-          {useFallback
-            ? PLACEHOLDERS.map((ph) => (
-                <Link
-                  key={ph.id}
-                  href="#"
-                  aria-label={ph.label}
-                  className="group relative block aspect-[4/3] overflow-hidden rounded-2xl transition-transform hover:scale-[1.01] duration-300"
-                  style={{ backgroundColor: ph.bg }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
-                  <div className="relative h-full flex flex-col justify-between p-5 md:p-6 text-white">
-                    <span className="font-bungee text-[10px] md:text-xs uppercase tracking-widest opacity-90">
-                      {ph.label}
-                    </span>
-                    <h3 className="font-paperlogy font-semibold text-lg md:text-xl leading-snug whitespace-pre-line">
-                      {ph.title}
-                    </h3>
-                  </div>
-                </Link>
-              ))
-            : specials.map((post) => (
-                <Link
-                  key={post.id}
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={post.title}
-                  className="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-[#FBF8F1] transition-transform hover:scale-[1.01] duration-300"
-                >
-                  {post.feature_image ? (
-                    <Image
-                      src={post.feature_image}
-                      alt={post.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-black/30 text-5xl font-black">
-                      komki
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent pointer-events-none" />
-                  <div className="relative h-full flex flex-col justify-end p-5 md:p-6 text-white">
-                    <h3 className="font-paperlogy font-semibold text-lg md:text-xl leading-snug line-clamp-2">
-                      {post.title}
-                    </h3>
-                  </div>
-                </Link>
-              ))}
+        {/* 데스크톱: 3컬럼 그리드 */}
+        <div className="hidden md:grid md:grid-cols-3 gap-5">
+          {items.map((item) => (
+            <Card key={item.key} item={item} />
+          ))}
+        </div>
+
+        {/* 모바일: 가로 스크롤, 한 카드씩 (옆 카드 살짝 보임) */}
+        <div className="md:hidden -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
+          {items.map((item) => (
+            <Card key={item.key} item={item} mobile />
+          ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function Card({ item, mobile = false }: { item: CardData; mobile?: boolean }) {
+  const widthClass = mobile ? "snap-start shrink-0 w-[85%]" : "w-full";
+
+  return (
+    <Link
+      href={item.href}
+      target={item.external ? "_blank" : undefined}
+      rel={item.external ? "noopener noreferrer" : undefined}
+      aria-label={item.title}
+      className={`group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-[#FBF8F1] transition-transform hover:scale-[1.01] duration-300 ${widthClass}`}
+      style={item.bg ? { backgroundColor: item.bg } : undefined}
+    >
+      {item.image && (
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          sizes="(max-width: 768px) 85vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent pointer-events-none" />
+      <div className="relative h-full flex flex-col justify-between p-5 md:p-6 text-white">
+        {item.label && (
+          <span className="font-bungee text-[10px] md:text-xs uppercase tracking-widest opacity-90">
+            {item.label}
+          </span>
+        )}
+        <h3 className="font-paperlogy font-semibold text-lg md:text-xl leading-snug whitespace-pre-line line-clamp-3 mt-auto">
+          {item.title}
+        </h3>
+      </div>
+    </Link>
   );
 }
