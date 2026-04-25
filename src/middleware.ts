@@ -23,7 +23,8 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/fonts") ||
     pathname === "/favicon.ico" ||
     pathname === "/robots.txt" ||
-    pathname === "/sitemap.xml"
+    pathname === "/sitemap.xml" ||
+    /\.(svg|png|jpg|jpeg|webp|gif|ico|woff2|woff|ttf|otf|css|js|map)$/i.test(pathname)
   ) {
     return NextResponse.next();
   }
