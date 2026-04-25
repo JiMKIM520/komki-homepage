@@ -1,10 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// MAINTENANCE_MODE=true 환경에서 모든 페이지 요청을 /maintenance로 rewrite.
-// dev (.env.local에 미설정 또는 false) 에서는 그대로 동작.
+// 도메인별 분기:
+//   - komki.co.kr (production): MAINTENANCE_MODE=true 일 때 /maintenance 노출
+//   - komki.vercel.app, *.vercel.app, localhost: 항상 정상 콘텐츠 (내부 검토용)
+const PRODUCTION_HOSTS = new Set(["komki.co.kr", "www.komki.co.kr"]);
+
 export function middleware(request: NextRequest) {
   const isMaintenance = process.env.MAINTENANCE_MODE === "true";
   if (!isMaintenance) return NextResponse.next();
+
+  const host = (request.headers.get("host") || "").toLowerCase();
+  // production 도메인이 아니면 maintenance 적용 안 함 (vercel.app preview / 로컬은 정상)
+  if (!PRODUCTION_HOSTS.has(host)) return NextResponse.next();
 
   const { pathname } = request.nextUrl;
 
