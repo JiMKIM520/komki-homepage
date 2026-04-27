@@ -214,7 +214,7 @@ export default function Navbar() {
 
       {/* ── 모바일 풀스크린 햄버거 오버레이 ── */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#3F1C03] text-[#FBF8F1] md:hidden flex flex-col overflow-y-auto">
+        <div className="fixed inset-0 z-50 bg-[#FBF8F1] text-black md:hidden flex flex-col overflow-y-auto">
           <div className="flex justify-end p-5">
             <button
               type="button"

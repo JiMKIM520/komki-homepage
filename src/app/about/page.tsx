@@ -70,14 +70,14 @@ export default function AboutPage() {
       </section>
 
       {/* About KOMPA */}
-      <section className="py-16 md:py-24 bg-[#3F1C03] text-[#FBF8F1]">
+      <section className="py-16 md:py-24 bg-[#FBF8F1] text-black">
         <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
             <div className="flex items-baseline gap-3 mb-4">
               <h2 className="font-dm-serif text-3xl md:text-5xl">About</h2>
               <span className="font-dm-serif text-3xl md:text-5xl">KOMPA</span>
             </div>
-            <p className="font-paperlogy text-base md:text-lg leading-relaxed text-[#FBF8F1]/85">
+            <p className="font-paperlogy text-base md:text-lg leading-relaxed text-[#3F1C03]">
               KOMPA(콤파)는 브랜드 마케팅 에이전시입니다.
               퍼포먼스·콘텐츠·브랜딩을 넘나들며 작은 브랜드가 시장에서 살아남고
               성장하도록 돕습니다. 콤키는 그 현장에서 얻은 인사이트를
@@ -90,7 +90,7 @@ export default function AboutPage() {
               alt="komki"
               width={180}
               height={192}
-              className="brightness-0 invert opacity-90"
+              className="brightness-0 opacity-90"
             />
           </div>
         </div>
