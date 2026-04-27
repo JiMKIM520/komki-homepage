@@ -103,10 +103,10 @@ export default function AboutPage() {
             제휴·광고·문의
           </p>
           <a
-            href="mailto:kompa@marketing.or.kr"
+            href="mailto:info@komki.co.kr"
             className="mt-4 inline-block font-dm-serif text-2xl md:text-4xl text-black underline-offset-4 hover:underline"
           >
-            kompa@marketing.or.kr
+            info@komki.co.kr
           </a>
           <p className="mt-3 font-paperlogy text-sm md:text-base text-[#3F1C03]">
             서울시 종로구 종로 325, 글라스타워 702호

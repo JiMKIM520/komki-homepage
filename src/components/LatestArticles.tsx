@@ -11,7 +11,7 @@ export default function LatestArticles({ posts }: { posts: GhostPost[] }) {
   const viewAllHref = "/articles";
 
   return (
-    <section id="articles" className="py-14 md:py-20 bg-white">
+    <section id="articles" className="pt-10 pb-14 md:pt-14 md:pb-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* 섹션 헤더 — 모든 콘텐츠 알약 */}
         <div className="mb-8 md:mb-10">

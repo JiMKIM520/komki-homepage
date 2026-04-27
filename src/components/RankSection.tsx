@@ -20,7 +20,7 @@ export default function RankSection({ posts }: { posts: GhostPost[] }) {
   if (ranked.length === 0) return null;
 
   return (
-    <section className="py-14 md:py-20 bg-white" onMouseLeave={() => setHoveredIndex(null)}>
+    <section className="py-10 md:py-14 bg-white" onMouseLeave={() => setHoveredIndex(null)}>
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* 섹션 라벨 — 검정 알약 */}
         <div className="mb-6 md:mb-8">
@@ -29,35 +29,35 @@ export default function RankSection({ posts }: { posts: GhostPost[] }) {
           </span>
         </div>
 
-        {/* 랭킹 리스트 — 굵은 검정 보더 (시안 10px) */}
-        <ul className="border-y-[4px] border-black">
+        {/* 랭킹 리스트 — 컴팩트 보더 */}
+        <ul className="border-y-[2px] border-black">
           {ranked.map((post, i) => {
             const tag = post.tags?.[0];
             const isHovered = hoveredIndex === i;
             const isLast = i === ranked.length - 1;
             return (
-              <li key={post.id} className={isLast ? "" : "border-b-[3px] border-black"}>
+              <li key={post.id} className={isLast ? "" : "border-b-[2px] border-black"}>
                 <Link
                   href={post.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={() => setHoveredIndex(i)}
-                  className="flex items-center gap-4 md:gap-8 py-3 md:py-4 transition-colors duration-200"
+                  className="flex items-center gap-3 md:gap-6 py-2 md:py-2.5 transition-colors duration-200"
                   style={{
                     color: isHovered ? "#3F1C03" : "#000000",
                     opacity: isHovered ? 0.8 : 1,
                   }}
                 >
-                  <span className="font-dm-serif text-3xl md:text-5xl w-12 md:w-20 shrink-0 tabular-nums leading-none">
+                  <span className="font-dm-serif text-2xl md:text-4xl w-10 md:w-16 shrink-0 tabular-nums leading-none">
                     {String(i + 1).padStart(2, "0")}
                   </span>
 
-                  <p className="flex-1 min-w-0 font-paperlogy font-medium text-base md:text-lg truncate">
+                  <p className="flex-1 min-w-0 font-paperlogy font-medium text-sm md:text-base truncate">
                     {post.title}
                   </p>
 
                   {tag && (
-                    <span className="shrink-0 font-dm-serif text-xs md:text-sm uppercase tracking-wider text-[#FBF8F1] bg-black rounded-full px-3 md:px-4 py-1 md:py-1.5">
+                    <span className="shrink-0 font-dm-serif text-[10px] md:text-xs uppercase tracking-wider text-[#FBF8F1] bg-black rounded-full px-2.5 md:px-3 py-0.5 md:py-1">
                       {badgeLabel(tag.name)}
                     </span>
                   )}

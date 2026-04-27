@@ -19,17 +19,27 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Ghost Members API: magic link 방식으로 구독 등록
+    // Ghost Members API v5: integrity-token 먼저 발급
+    const tokenRes = await fetch(`${ghostUrl}/members/api/integrity-token/`);
+    if (!tokenRes.ok) {
+      console.error("Ghost integrity-token error:", tokenRes.status);
+      return NextResponse.json(
+        { message: "구독 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요." },
+        { status: 500 }
+      );
+    }
+    const integrityToken = (await tokenRes.text()).trim();
+
+    // magic link로 회원가입(=newsletter 구독) 요청
     const res = await fetch(`${ghostUrl}/members/api/send-magic-link/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Accept-Version": "v5.0",
       },
       body: JSON.stringify({
         email,
-        emailType: "subscribe",
-        labels: [{ name: source || "website" }],
+        emailType: "signup",
+        integrityToken,
       }),
     });
 

@@ -52,10 +52,10 @@ export default function Footer() {
                 <p>
                   광고 제휴 문의{" "}
                   <a
-                    href="mailto:kompa@marketing.or.kr"
+                    href="mailto:info@komki.co.kr"
                     className="hover:text-[#FBF8F1] transition-colors"
                   >
-                    kompa@marketing.or.kr
+                    info@komki.co.kr
                   </a>
                 </p>
                 <p>서울시 종로구 종로 325, 글라스타워 702호</p>

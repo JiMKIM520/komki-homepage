@@ -87,11 +87,11 @@ export default function HeroArticles({ posts }: Props) {
         </div>
         <Slot
           post={center}
-          aspect="min-h-[4rem] mx-4"
-          className="mt-5"
+          aspect="min-h-[4rem] w-[70%] mx-auto"
+          className="mt-1"
           render={(p) => (
             <div className="bg-black w-full h-full px-5 py-3 flex items-center">
-              <h2 className="font-paperlogy font-semibold text-base leading-snug text-[#FBF8F1] text-left line-clamp-2">
+              <h2 className="font-paperlogy font-semibold text-base leading-snug text-[#FBF8F1] text-left line-clamp-2 break-keep">
                 {p.title}
               </h2>
             </div>
