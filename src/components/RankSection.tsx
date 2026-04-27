@@ -7,8 +7,9 @@ import { GhostPost } from "@/lib/ghost-types";
 function badgeLabel(tagName: string): string {
   const lc = tagName.toLowerCase();
   if (lc.includes("ai")) return "AI";
-  if (lc.includes("market")) return "Marketing";
+  if (lc.includes("market") || tagName.includes("마케팅")) return "Marketing";
   if (lc.includes("trend") || tagName.includes("트렌드")) return "Trend";
+  if (tagName.includes("스페셜")) return "Special";
   return tagName;
 }
 
@@ -29,13 +30,13 @@ export default function RankSection({ posts }: { posts: GhostPost[] }) {
         </div>
 
         {/* 랭킹 리스트 — 굵은 검정 보더 (시안 10px) */}
-        <ul className="border-y-[10px] border-black">
+        <ul className="border-y-[4px] border-black">
           {ranked.map((post, i) => {
             const tag = post.tags?.[0];
             const isHovered = hoveredIndex === i;
             const isLast = i === ranked.length - 1;
             return (
-              <li key={post.id} className={isLast ? "" : "border-b-[6px] border-black"}>
+              <li key={post.id} className={isLast ? "" : "border-b-[3px] border-black"}>
                 <Link
                   href={post.url}
                   target="_blank"

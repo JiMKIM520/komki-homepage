@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { GhostPost, getPreview } from "@/lib/ghost-types";
@@ -23,6 +23,23 @@ export default function HeroArticles({ posts }: Props) {
     return () => clearInterval(id);
   }, [paused, posts.length]);
 
+  // 모바일 터치 스와이프
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+  const handleTouchEnd = () => {
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipe = 50;
+    if (distance > minSwipe) setIndex((i) => (i + 1) % posts.length);
+    else if (distance < -minSwipe) setIndex((i) => (i - 1 + posts.length) % posts.length);
+  };
+
   if (posts.length === 0) return null;
 
   const n = posts.length;
@@ -32,7 +49,7 @@ export default function HeroArticles({ posts }: Props) {
 
   return (
     <section
-      className="bg-[#3F1C03] overflow-hidden"
+      className="bg-[#FBF8F1] overflow-hidden"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-label="주요 콘텐츠"
@@ -40,10 +57,10 @@ export default function HeroArticles({ posts }: Props) {
       {/* ─── 데스크톱: 3슬롯 ─── */}
       <div className="hidden md:flex max-w-[1600px] mx-auto px-6 lg:px-10 pt-8 lg:pt-12 pb-4 lg:pb-6 gap-5 lg:gap-8 items-center justify-center">
         <Slot post={left} aspect="aspect-[4/5]" className="shrink-0 w-[18%] max-w-[280px]" render={renderSide} />
-        {/* 가운데: 포스터 위(z-10), 내용박스는 살짝 아래+겹치게 layered 배치 */}
+        {/* 가운데: 포스터 + 내용박스 동일 4:5 비율로 정확히 옆에 붙임 */}
         <div className="shrink-0 w-[52%] max-w-[880px] flex">
-          <Slot post={center} aspect="w-1/2 aspect-[4/5] z-10" render={renderPoster} />
-          <Slot post={center} aspect="w-1/2 aspect-[4/5] -ml-[3%] mt-[5%]" render={renderContent} />
+          <Slot post={center} aspect="w-1/2 aspect-[4/5]" render={renderPoster} />
+          <Slot post={center} aspect="w-1/2 aspect-[4/5]" render={renderContent} />
         </div>
         <Slot post={right} aspect="aspect-[4/5]" className="shrink-0 w-[18%] max-w-[280px]" render={renderSide} />
       </div>
@@ -56,8 +73,13 @@ export default function HeroArticles({ posts }: Props) {
         onSelect={(i) => setIndex((i - 1 + n) % n)}
       />
 
-      {/* ─── 모바일: peek carousel (중앙 + 좌우 큰 포스터가 화면 밖으로 잘림) ─── */}
-      <div className="md:hidden pt-6 overflow-hidden">
+      {/* ─── 모바일: peek carousel + 터치 스와이프 ─── */}
+      <div
+        className="md:hidden pt-6 overflow-hidden touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="flex items-center justify-center gap-3">
           <Slot post={left} aspect="aspect-[4/5]" className="shrink-0 w-[45%] opacity-60 pointer-events-none select-none" render={renderMobilePeek} />
           <Slot post={center} aspect="aspect-[4/5]" className="shrink-0 w-[70%]" render={renderMobileCenter} />
@@ -65,12 +87,14 @@ export default function HeroArticles({ posts }: Props) {
         </div>
         <Slot
           post={center}
-          aspect="min-h-[3rem]"
-          className="mt-6 px-6"
+          aspect="min-h-[4rem] mx-4"
+          className="mt-5"
           render={(p) => (
-            <h2 className="font-paperlogy font-semibold text-xl leading-tight text-[#FBF8F1] text-center line-clamp-2">
-              {p.title}
-            </h2>
+            <div className="bg-black w-full h-full px-5 py-3 flex items-center">
+              <h2 className="font-paperlogy font-semibold text-base leading-snug text-[#FBF8F1] text-left line-clamp-2">
+                {p.title}
+              </h2>
+            </div>
           )}
         />
       </div>
@@ -157,7 +181,7 @@ function Dots({
             aria-label={`${i + 1}번 슬라이드로 이동`}
             aria-current={isActive}
             className={`h-2 rounded-full transition-all duration-300 ${
-              isActive ? "w-8 bg-[#FBF8F1]" : "w-2 bg-[#FBF8F1]/30 hover:bg-[#FBF8F1]/50"
+              isActive ? "w-8 bg-black" : "w-2 bg-black/30 hover:bg-black/50"
             }`}
           />
         );
