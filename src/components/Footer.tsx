@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import SubscribeForm from "./SubscribeForm";
 
 export default function Footer() {
@@ -43,10 +44,20 @@ export default function Footer() {
                 KOMKI
               </p>
               <div className="mt-7 md:mt-9 flex items-baseline gap-3">
-                <h3 className="font-dm-serif text-2xl md:text-3xl">About</h3>
-                <span className="font-dm-serif text-2xl md:text-3xl">
+                <Link
+                  href="/about"
+                  className="font-dm-serif text-2xl md:text-3xl hover:opacity-80 transition-opacity"
+                >
+                  About
+                </Link>
+                <a
+                  href="https://www.marketing.or.kr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-dm-serif text-2xl md:text-3xl hover:opacity-80 transition-opacity"
+                >
                   KOMPA
-                </span>
+                </a>
               </div>
               <div className="mt-3 space-y-1 font-paperlogy text-xs md:text-sm text-[#FBF8F1]/70 leading-relaxed">
                 <p>
