@@ -251,14 +251,14 @@ function renderContent(post: GhostPost) {
     >
       {/* 제목 — 검정 배경 */}
       <div className="bg-black text-white px-6 lg:px-8 py-6 lg:py-7">
-        <h2 className="font-paperlogy font-semibold text-xl lg:text-[28px] leading-tight line-clamp-3 break-keep">
+        <h2 className="font-paperlogy font-semibold text-xl lg:text-[28px] leading-tight line-clamp-3">
           {post.title}
         </h2>
       </div>
       {/* 본문 + 읽어보기 */}
-      <div className="flex-1 flex flex-col px-6 lg:px-8 py-6 lg:py-8 min-h-0">
+      <div className="flex-1 flex flex-col px-6 lg:px-8 py-6 lg:py-8 min-h-0 overflow-hidden">
         {preview && (
-          <p className="mt-3 lg:mt-4 font-paperlogy text-sm lg:text-base text-black leading-relaxed line-clamp-6 break-keep">
+          <p className="mt-3 lg:mt-4 font-paperlogy text-sm lg:text-base text-black leading-relaxed line-clamp-5">
             {preview}
           </p>
         )}
