@@ -65,11 +65,13 @@ export default async function ArticlePage({ params }: PageProps) {
 
   if (!post) notFound();
 
-  const primaryTagSlug = post.tags?.[0]?.slug;
-  const candidates: GhostPost[] = primaryTagSlug
-    ? await getPostsByTag(primaryTagSlug, 6)
-    : await getLatestPosts(6, "seupesyeol");
-  const related = candidates.filter((p) => p.id !== post.id).slice(0, 3);
+  // 콤키 스페셜 섹션 + 더 읽어보기 섹션 두 갈래로 (메인 페이지와 동일 패턴)
+  const [specialsRaw, latestRaw] = await Promise.all([
+    getPostsByTag("seupesyeol", 4),
+    getLatestPosts(10, "seupesyeol"),
+  ]);
+  const specials = specialsRaw.filter((p) => p.id !== post.id).slice(0, 3);
+  const more = latestRaw.filter((p) => p.id !== post.id).slice(0, 6);
 
   const tag = post.tags?.[0];
   const author = post.authors?.[0];
@@ -139,7 +141,32 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       </article>
 
-      {related.length > 0 && (
+      {/* 콤키 스페셜 섹션 — 4:3 가로 썸네일 (AdSection과 동일 패턴) */}
+      {specials.length > 0 && (
+        <section className="py-14 md:py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            <div className="mb-6 md:mb-8">
+              <span className="inline-flex items-center bg-black text-[#FBF8F1] text-sm md:text-base font-paperlogy font-semibold tracking-wide rounded-full px-5 py-2">
+                콤키 스페셜
+              </span>
+            </div>
+
+            <div className="hidden md:grid md:grid-cols-3 gap-5">
+              {specials.map((p) => (
+                <SpecialCard key={p.id} post={p} />
+              ))}
+            </div>
+            <div className="md:hidden -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
+              {specials.map((p) => (
+                <SpecialCard key={p.id} post={p} mobile />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 더 읽어보기 섹션 — 4:5 세로 썸네일 (ArticleGrid 패턴) */}
+      {more.length > 0 && (
         <section className="bg-[#FBF8F1] py-14 md:py-20">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="mb-6 md:mb-8">
@@ -149,13 +176,13 @@ export default async function ArticlePage({ params }: PageProps) {
             </div>
 
             <div className="hidden md:grid md:grid-cols-3 gap-x-8 gap-y-12">
-              {related.map((p) => (
-                <RelatedCard key={p.id} post={p} />
+              {more.slice(0, 3).map((p) => (
+                <MoreCard key={p.id} post={p} />
               ))}
             </div>
             <div className="md:hidden -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
-              {related.map((p) => (
-                <RelatedCard key={p.id} post={p} mobile />
+              {more.map((p) => (
+                <MoreCard key={p.id} post={p} mobile />
               ))}
             </div>
           </div>
@@ -167,17 +194,45 @@ export default async function ArticlePage({ params }: PageProps) {
   );
 }
 
-function RelatedCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
-  const widthClass = mobile ? "snap-start shrink-0 w-[70%]" : "w-full";
+/* 콤키 스페셜 카드 — 4:3 가로 비율 + 텍스트 아래 */
+function SpecialCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
+  const widthClass = mobile ? "snap-start shrink-0 w-[85%]" : "w-full";
   return (
     <Link href={`/${post.slug}/`} className={`group block ${widthClass}`}>
-      <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-[#3F1C03]/5">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#FBF8F1]">
         {post.feature_image ? (
           <Image
             src={post.feature_image}
             alt={post.title}
             fill
-            sizes="(max-width: 768px) 70vw, 33vw"
+            sizes="(max-width: 768px) 85vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-black/30 text-4xl font-black">
+            komki
+          </div>
+        )}
+      </div>
+      <h3 className="mt-3 md:mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 break-keep transition-colors group-hover:text-[#3F1C03]">
+        {post.title}
+      </h3>
+    </Link>
+  );
+}
+
+/* 더 읽어보기 카드 — 4:5 세로 비율 + 텍스트 아래 */
+function MoreCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
+  const widthClass = mobile ? "snap-start shrink-0 w-[60%]" : "w-full";
+  return (
+    <Link href={`/${post.slug}/`} className={`group block ${widthClass}`}>
+      <div className="relative aspect-[4/5] overflow-hidden">
+        {post.feature_image ? (
+          <Image
+            src={post.feature_image}
+            alt={post.title}
+            fill
+            sizes="(max-width: 768px) 60vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
