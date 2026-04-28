@@ -104,14 +104,8 @@ export default async function ArticlePage({ params }: PageProps) {
 
           <div className="flex items-center gap-3 font-paperlogy text-xs md:text-sm text-black/60">
             {author?.name && <span>{author.name}</span>}
-            {author?.name && (dateStr || post.reading_time) && (
-              <span className="text-black/30">·</span>
-            )}
+            {author?.name && dateStr && <span className="text-black/30">·</span>}
             {dateStr && <span>{dateStr}</span>}
-            {dateStr && post.reading_time > 0 && (
-              <span className="text-black/30">·</span>
-            )}
-            {post.reading_time > 0 && <span>{post.reading_time}분 읽기</span>}
           </div>
         </header>
 
