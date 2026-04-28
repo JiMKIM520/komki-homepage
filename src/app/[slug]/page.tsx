@@ -114,17 +114,17 @@ export default async function ArticlePage({ params }: PageProps) {
         </header>
 
         {post.feature_image && (
-          <div className="max-w-4xl mx-auto px-4 md:px-8 mb-8 md:mb-12">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
-              <Image
-                src={post.feature_image}
-                alt={post.feature_image_alt || post.title}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 1024px"
-                className="object-cover"
-              />
-            </div>
+          <div className="max-w-3xl mx-auto px-4 md:px-8 mb-8 md:mb-12">
+            {/* 원본 비율 보존 — Ghost는 image dimensions를 API로 주지 않아서
+                next/image fill 대신 일반 img 사용. 비율 강제 크롭 방지. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.feature_image}
+              alt={post.feature_image_alt || post.title}
+              className="block w-full h-auto rounded-xl"
+              loading="eager"
+              decoding="async"
+            />
           </div>
         )}
 
