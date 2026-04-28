@@ -38,7 +38,7 @@ export default function ArticleGrid({ posts }: { posts: GhostPost[] }) {
                 </div>
               )}
             </div>
-            <h3 className="mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 text-left max-w-[80%] transition-colors group-hover:text-[#3F1C03]">
+            <h3 className="mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 text-left max-w-[80%] break-keep transition-colors group-hover:text-[#3F1C03]">
               {post.title}
             </h3>
           </Link>
@@ -71,7 +71,7 @@ export default function ArticleGrid({ posts }: { posts: GhostPost[] }) {
               )}
             </div>
             <div className="bg-black px-3 py-3 h-[72px] flex items-start">
-              <h3 className="font-paperlogy font-medium text-xs text-[#FBF8F1] leading-snug line-clamp-3">
+              <h3 className="font-paperlogy font-medium text-xs text-[#FBF8F1] leading-snug line-clamp-3 break-keep">
                 {post.title}
               </h3>
             </div>

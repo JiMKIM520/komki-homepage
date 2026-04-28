@@ -4,7 +4,7 @@ import ArticleGrid from "@/components/ArticleGrid";
 import TagFilter, { type TagOption } from "@/components/TagFilter";
 import { getLatestPosts, getPostsByTag } from "@/lib/ghost";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 const TAGS: ReadonlyArray<TagOption> = [
   { label: "모든 콘텐츠", value: "" },

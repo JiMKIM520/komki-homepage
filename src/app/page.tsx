@@ -6,7 +6,7 @@ import AdSection from "@/components/AdSection";
 import Footer from "@/components/Footer";
 import { getLatestPosts } from "@/lib/ghost";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 export default async function HomePage() {
   // 스페셜 태그(slug=seupesyeol)는 콤키 스페셜 섹션에만 노출 → 일반 흐름에서 제외
