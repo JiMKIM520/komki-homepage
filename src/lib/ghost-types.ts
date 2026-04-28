@@ -8,6 +8,7 @@ export type GhostPost = {
   url: string;
   excerpt: string | null;
   plaintext: string | null;
+  html: string | null;
   feature_image: string | null;
   feature_image_alt: string | null;
   published_at: string | null;

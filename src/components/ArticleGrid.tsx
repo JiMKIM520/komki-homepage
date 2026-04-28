@@ -18,9 +18,7 @@ export default function ArticleGrid({ posts }: { posts: GhostPost[] }) {
         {posts.map((post) => (
           <Link
             key={post.id}
-            href={post.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`/${post.slug}/`}
             className="group block"
           >
             <div className="relative aspect-[4/5] overflow-hidden">
@@ -50,9 +48,7 @@ export default function ArticleGrid({ posts }: { posts: GhostPost[] }) {
         {posts.map((post) => (
           <Link
             key={post.id}
-            href={post.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`/${post.slug}/`}
             className="snap-start block"
           >
             <div className="relative aspect-[4/5] overflow-hidden">

@@ -195,9 +195,7 @@ function Dots({
 function renderSide(post: GhostPost) {
   return (
     <Link
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/${post.slug}/`}
       aria-label={post.title}
       className="block w-full h-full overflow-hidden"
     >
@@ -221,9 +219,7 @@ function renderSide(post: GhostPost) {
 function renderPoster(post: GhostPost) {
   return (
     <Link
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/${post.slug}/`}
       aria-label={post.title}
       className="block w-full h-full overflow-hidden"
     >
@@ -249,9 +245,7 @@ function renderContent(post: GhostPost) {
   const preview = getPreview(post, PREVIEW_CHARS);
   return (
     <Link
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/${post.slug}/`}
       aria-label={post.title}
       className="block w-full h-full bg-white flex flex-col overflow-hidden"
     >
@@ -281,9 +275,7 @@ function renderContent(post: GhostPost) {
 function renderMobileCenter(post: GhostPost) {
   return (
     <Link
-      href={post.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/${post.slug}/`}
       aria-label={post.title}
       className="block w-full h-full overflow-hidden"
     >

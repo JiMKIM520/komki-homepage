@@ -46,7 +46,10 @@ export async function getPostBySlug(slug: string): Promise<GhostPost | null> {
   try {
     const post = await api.posts.read(
       { slug },
-      { include: ["tags", "authors"] }
+      {
+        include: ["tags", "authors"],
+        formats: ["html", "plaintext"],
+      }
     );
     return post as unknown as GhostPost;
   } catch {

@@ -38,9 +38,7 @@ export default function RankSection({ posts }: { posts: GhostPost[] }) {
             return (
               <li key={post.id} className={isLast ? "" : "border-b-[2px] border-black"}>
                 <Link
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/${post.slug}/`}
                   onMouseEnter={() => setHoveredIndex(i)}
                   className="flex items-center gap-3 md:gap-6 py-2 md:py-2.5 transition-colors duration-200"
                   style={{

@@ -38,8 +38,8 @@ export default async function AdSection() {
         }))
       : specials.map((post) => ({
           key: post.id,
-          href: post.url,
-          external: true,
+          href: `/${post.slug}/`,
+          external: false,
           image: post.feature_image,
           title: post.title,
         }));
@@ -81,29 +81,34 @@ function Card({ item, mobile = false }: { item: CardData; mobile?: boolean }) {
       target={item.external ? "_blank" : undefined}
       rel={item.external ? "noopener noreferrer" : undefined}
       aria-label={item.title}
-      className={`group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-[#FBF8F1] transition-transform hover:scale-[1.01] duration-300 ${widthClass}`}
-      style={item.bg ? { backgroundColor: item.bg } : undefined}
+      className={`group block ${widthClass}`}
     >
-      {item.image && (
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          sizes="(max-width: 768px) 85vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent pointer-events-none" />
-      <div className="relative h-full flex flex-col justify-between p-5 md:p-6 text-white">
-        {item.label && (
-          <span className="font-bungee text-[10px] md:text-xs uppercase tracking-widest opacity-90">
-            {item.label}
-          </span>
+      {/* 썸네일 박스 */}
+      <div
+        className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#FBF8F1] transition-transform group-hover:scale-[1.01] duration-300"
+        style={item.bg ? { backgroundColor: item.bg } : undefined}
+      >
+        {item.image ? (
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            sizes="(max-width: 768px) 85vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+          />
+        ) : (
+          item.label && (
+            <div className="absolute top-4 left-4 font-bungee text-[10px] md:text-xs uppercase tracking-widest text-white opacity-90">
+              {item.label}
+            </div>
+          )
         )}
-        <h3 className="font-paperlogy font-semibold text-lg md:text-xl leading-snug whitespace-pre-line line-clamp-3 mt-auto">
-          {item.title}
-        </h3>
       </div>
+
+      {/* 제목 (썸네일 아래) */}
+      <h3 className="mt-3 md:mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 break-keep transition-colors group-hover:text-[#3F1C03]">
+        {item.title}
+      </h3>
     </Link>
   );
 }

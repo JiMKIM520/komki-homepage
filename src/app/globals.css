@@ -162,3 +162,185 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ───────────────────────────────────────────────
+   Article prose — Ghost HTML 본문 스타일
+   .komki-prose 컨테이너 내부에 적용
+   ─────────────────────────────────────────────── */
+.komki-prose {
+  font-family: var(--font-paperlogy), system-ui, sans-serif;
+  color: #000;
+  font-size: 17px;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+@media (min-width: 768px) {
+  .komki-prose {
+    font-size: 18px;
+    line-height: 1.85;
+  }
+}
+
+.komki-prose > * + * {
+  margin-top: 1.1em;
+}
+
+.komki-prose h1,
+.komki-prose h2,
+.komki-prose h3,
+.komki-prose h4 {
+  font-family: var(--font-paperlogy), system-ui, sans-serif;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+.komki-prose h1 { font-size: 1.875rem; }
+.komki-prose h2 { font-size: 1.625rem; }
+.komki-prose h3 { font-size: 1.375rem; }
+.komki-prose h4 { font-size: 1.125rem; }
+@media (min-width: 768px) {
+  .komki-prose h1 { font-size: 2.25rem; }
+  .komki-prose h2 { font-size: 1.875rem; }
+  .komki-prose h3 { font-size: 1.5rem; }
+  .komki-prose h4 { font-size: 1.25rem; }
+}
+
+.komki-prose p {
+  font-weight: 400;
+}
+
+.komki-prose strong,
+.komki-prose b {
+  font-weight: 600;
+  color: #000;
+}
+
+.komki-prose a {
+  color: #3F1C03;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: opacity 0.2s;
+}
+.komki-prose a:hover {
+  opacity: 0.7;
+}
+
+.komki-prose blockquote {
+  border-left: 4px solid #000;
+  padding: 0.4em 1.2em;
+  margin: 1.6em 0;
+  font-style: italic;
+  color: #3F1C03;
+  background: #FBF8F1;
+}
+.komki-prose blockquote p {
+  margin: 0;
+}
+
+.komki-prose ul,
+.komki-prose ol {
+  padding-left: 1.5em;
+}
+.komki-prose ul { list-style: disc; }
+.komki-prose ol { list-style: decimal; }
+.komki-prose li {
+  margin-top: 0.4em;
+}
+.komki-prose li::marker {
+  color: #000;
+}
+
+.komki-prose img,
+.komki-prose figure {
+  margin: 1.8em 0;
+  border-radius: 0.5rem;
+  max-width: 100%;
+  height: auto;
+}
+.komki-prose figure img {
+  margin: 0;
+  border-radius: 0.5rem;
+}
+.komki-prose figcaption {
+  font-size: 0.875rem;
+  color: #3F1C03;
+  text-align: center;
+  margin-top: 0.6em;
+}
+
+.komki-prose pre {
+  background: #1a1a1a;
+  color: #f5f5f5;
+  padding: 1em 1.2em;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.9em;
+  font-family: var(--font-mono), monospace;
+  line-height: 1.6;
+}
+.komki-prose code {
+  background: #FBF8F1;
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-family: var(--font-mono), monospace;
+}
+.komki-prose pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.komki-prose hr {
+  border: none;
+  border-top: 2px solid #000;
+  margin: 2.4em 0;
+}
+
+.komki-prose iframe {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  margin: 1.8em 0;
+}
+
+.komki-prose .kg-card,
+.komki-prose .kg-bookmark-card,
+.komki-prose .kg-embed-card {
+  margin: 1.8em 0;
+}
+.komki-prose .kg-bookmark-container {
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #fff;
+}
+.komki-prose .kg-bookmark-content {
+  flex: 1;
+  padding: 1em 1.2em;
+}
+.komki-prose .kg-bookmark-title {
+  font-weight: 600;
+  margin-bottom: 0.3em;
+}
+.komki-prose .kg-bookmark-description {
+  font-size: 0.9em;
+  color: #3F1C03;
+}
+.komki-prose .kg-bookmark-thumbnail {
+  width: 33%;
+  max-width: 200px;
+}
+.komki-prose .kg-bookmark-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin: 0;
+  border-radius: 0;
+}
