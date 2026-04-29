@@ -37,31 +37,52 @@ export default function AboutPage() {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      {/* ── 헤드라인 (#FBF8F1 박스 + 큰 따옴표 장식) ── */}
+      {/* ── 네비바와 크림박스 사이 흰 spacer ── */}
+      <div className="bg-white h-8 md:h-16" />
+
+      {/* ── 헤드라인 (#FBF8F1 박스 + 큰 따옴표 4개) ── */}
       <section className="bg-[#FBF8F1] py-12 md:py-20">
         <div className="relative max-w-5xl mx-auto px-6 md:px-12">
-          {/* 좌상단 큰 따옴표 (열기, stroke) */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/about/quote-open-stroke.svg"
-            alt=""
-            aria-hidden
-            className="absolute -top-2 left-2 md:-top-4 md:left-6 w-10 md:w-16 h-auto select-none pointer-events-none"
-          />
+          {/* 좌상단 큰 따옴표 두 개 (열기, stroke) */}
+          <div className="absolute -top-1 left-3 md:-top-2 md:left-6 flex gap-0.5 md:gap-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/about/quote-open-stroke.svg"
+              alt=""
+              aria-hidden
+              className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/about/quote-open-stroke.svg"
+              alt=""
+              aria-hidden
+              className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            />
+          </div>
 
           {/* 헤드라인 한 줄 */}
           <h1 className="font-paperlogy font-semibold text-2xl md:text-5xl lg:text-6xl text-black leading-tight text-center break-keep px-12 md:px-20">
             사장님의 하루에, 작은 쉼표 하나
           </h1>
 
-          {/* 우하단 큰 따옴표 (닫기, fill) */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/about/quote-close-fill.svg"
-            alt=""
-            aria-hidden
-            className="absolute -bottom-2 right-2 md:-bottom-4 md:right-6 w-10 md:w-16 h-auto select-none pointer-events-none"
-          />
+          {/* 우하단 큰 따옴표 두 개 (닫기, fill) */}
+          <div className="absolute -bottom-1 right-3 md:-bottom-2 md:right-6 flex gap-0.5 md:gap-1">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/about/quote-close-fill.svg"
+              alt=""
+              aria-hidden
+              className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/about/quote-close-fill.svg"
+              alt=""
+              aria-hidden
+              className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            />
+          </div>
         </div>
       </section>
 
@@ -105,7 +126,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── KOMKI's 에디터 소개 ── */}
-      <section className="bg-[#FBF8F1] py-14 md:py-24">
+      <section className="bg-white py-14 md:py-24">
         <div className="max-w-5xl mx-auto px-4 md:px-8">
           {/* 타이틀 + 양옆 구분선 */}
           <div className="flex items-center gap-4 md:gap-6 mb-10 md:mb-14">
