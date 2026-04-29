@@ -3,6 +3,7 @@ import HeroArticles from "@/components/HeroArticles";
 import LatestArticles from "@/components/LatestArticles";
 import RankSection from "@/components/RankSection";
 import AdSection from "@/components/AdSection";
+import InfoSection from "@/components/InfoSection";
 import Footer from "@/components/Footer";
 import { getLatestPosts } from "@/lib/ghost";
 
@@ -19,6 +20,7 @@ export default async function HomePage() {
       <RankSection posts={posts} />
       <LatestArticles posts={posts} />
       <AdSection />
+      <InfoSection />
       <Footer />
     </main>
   );
