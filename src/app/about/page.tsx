@@ -40,49 +40,49 @@ export default function AboutPage() {
       {/* ── 네비바와 크림박스 사이 흰 spacer ── */}
       <div className="bg-white h-8 md:h-16" />
 
-      {/* ── 헤드라인 (#FBF8F1 박스 + 큰 따옴표 4개) ── */}
-      <section className="bg-[#FBF8F1] py-12 md:py-20">
-        <div className="relative max-w-5xl mx-auto px-6 md:px-12">
-          {/* 좌상단 큰 따옴표 두 개 (열기, stroke) */}
-          <div className="absolute -top-1 left-3 md:-top-2 md:left-6 flex gap-0.5 md:gap-1">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/about/quote-open-stroke.svg"
-              alt=""
-              aria-hidden
-              className="w-3 md:w-5 h-auto select-none pointer-events-none"
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/about/quote-open-stroke.svg"
-              alt=""
-              aria-hidden
-              className="w-3 md:w-5 h-auto select-none pointer-events-none"
-            />
-          </div>
+      {/* ── 헤드라인 (#FBF8F1 박스 + 큰 따옴표 4개, 박스 경계에 걸침) ── */}
+      <section className="relative bg-[#FBF8F1] py-12 md:py-20">
+        {/* 좌상단 큰 따옴표 두 개 (열기, stroke) — 위 경계에 절반 걸침 */}
+        <div className="absolute top-0 left-[20%] md:left-[22%] -translate-y-1/2 flex gap-0.5 md:gap-1">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/about/quote-open-stroke.svg"
+            alt=""
+            aria-hidden
+            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/about/quote-open-stroke.svg"
+            alt=""
+            aria-hidden
+            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+          />
+        </div>
 
+        <div className="max-w-5xl mx-auto px-6 md:px-12">
           {/* 헤드라인 한 줄 */}
           <h1 className="font-paperlogy font-semibold text-2xl md:text-5xl lg:text-6xl text-black leading-tight text-center break-keep px-12 md:px-20">
             사장님의 하루에, 작은 쉼표 하나
           </h1>
+        </div>
 
-          {/* 우하단 큰 따옴표 두 개 (닫기, fill) */}
-          <div className="absolute -bottom-1 right-3 md:-bottom-2 md:right-6 flex gap-0.5 md:gap-1">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/about/quote-close-fill.svg"
-              alt=""
-              aria-hidden
-              className="w-3 md:w-5 h-auto select-none pointer-events-none"
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/about/quote-close-fill.svg"
-              alt=""
-              aria-hidden
-              className="w-3 md:w-5 h-auto select-none pointer-events-none"
-            />
-          </div>
+        {/* 우하단 큰 따옴표 두 개 (닫기, fill) — 아래 경계에 절반 걸침 */}
+        <div className="absolute bottom-0 right-[20%] md:right-[22%] translate-y-1/2 flex gap-0.5 md:gap-1">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/about/quote-close-fill.svg"
+            alt=""
+            aria-hidden
+            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/about/quote-close-fill.svg"
+            alt=""
+            aria-hidden
+            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+          />
         </div>
       </section>
 
