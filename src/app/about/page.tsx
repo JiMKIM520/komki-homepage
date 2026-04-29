@@ -37,16 +37,38 @@ export default function AboutPage() {
     <main className="min-h-screen bg-white">
       <Navbar />
 
-      {/* ── 헤드라인 + 본문 카피 ── */}
-      <section className="bg-white pt-12 md:pt-20 pb-14 md:pb-24">
-        <div className="max-w-4xl mx-auto px-4 md:px-8">
-          <h1 className="font-paperlogy font-semibold text-3xl md:text-5xl lg:text-6xl text-black leading-tight text-center break-keep">
-            사장님의 하루에,
-            <br />
-            작은 쉼표 하나
+      {/* ── 헤드라인 (#FBF8F1 박스 + 큰 따옴표 장식) ── */}
+      <section className="bg-[#FBF8F1] py-12 md:py-20">
+        <div className="relative max-w-5xl mx-auto px-6 md:px-12">
+          {/* 좌상단 큰 따옴표 (열기, stroke) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/about/quote-open-stroke.svg"
+            alt=""
+            aria-hidden
+            className="absolute -top-2 left-2 md:-top-4 md:left-6 w-10 md:w-16 h-auto select-none pointer-events-none"
+          />
+
+          {/* 헤드라인 한 줄 */}
+          <h1 className="font-paperlogy font-semibold text-2xl md:text-5xl lg:text-6xl text-black leading-tight text-center break-keep px-12 md:px-20">
+            사장님의 하루에, 작은 쉼표 하나
           </h1>
 
-          <div className="mt-12 md:mt-16 space-y-6 md:space-y-7 font-paperlogy text-black leading-loose break-keep text-base md:text-lg">
+          {/* 우하단 큰 따옴표 (닫기, fill) */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/about/quote-close-fill.svg"
+            alt=""
+            aria-hidden
+            className="absolute -bottom-2 right-2 md:-bottom-4 md:right-6 w-10 md:w-16 h-auto select-none pointer-events-none"
+          />
+        </div>
+      </section>
+
+      {/* ── 본문 카피 (중앙 정렬) ── */}
+      <section className="bg-white py-14 md:py-24">
+        <div className="max-w-3xl mx-auto px-4 md:px-8">
+          <div className="space-y-6 md:space-y-7 font-paperlogy text-black leading-loose break-keep text-base md:text-lg text-center">
             <p className="font-semibold text-lg md:text-xl">
               콤키(KOMKI)는 창업자와 소상공인을 위한 비즈니스 레터예요!
             </p>
