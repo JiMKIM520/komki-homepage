@@ -66,9 +66,10 @@ export default async function ArticlePage({ params }: PageProps) {
   if (!post) notFound();
 
   // 콤키 스페셜 섹션 + 더 읽어보기 섹션 두 갈래로 (메인 페이지와 동일 패턴)
+  // 더 읽어보기는 일반 흐름이므로 스페셜+한입정보 모두 제외
   const [specialsRaw, latestRaw] = await Promise.all([
     getPostsByTag("seupesyeol", 4),
-    getLatestPosts(10, "seupesyeol"),
+    getLatestPosts(10, ["seupesyeol", "info"]),
   ]);
   const specials = specialsRaw.filter((p) => p.id !== post.id).slice(0, 3);
   const more = latestRaw.filter((p) => p.id !== post.id).slice(0, 6);

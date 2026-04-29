@@ -26,10 +26,11 @@ export default async function ArticlesPage({
 }) {
   const params = await searchParams;
   const tag = params.tag ?? "";
-  // 모든 콘텐츠 뷰에서는 스페셜 태그(seupesyeol) 제외 — 콤키 스페셜 칩에서만 노출
+  // 모든 콘텐츠 뷰에서는 한입 정보(info) 태그만 제외 — 메인의 한입 정보 섹션에서만 노출.
+  // 콤키 스페셜은 articles의 모든 콘텐츠/스페셜 칩 양쪽에 표시.
   const posts = tag
     ? await getPostsByTag(tag, 50)
-    : await getLatestPosts(50, "seupesyeol");
+    : await getLatestPosts(50, "info");
   const activeLabel = TAGS.find((t) => t.value === tag)?.label ?? "모든 콘텐츠";
 
   return (

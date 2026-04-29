@@ -10,8 +10,8 @@ import { getLatestPosts } from "@/lib/ghost";
 export const revalidate = 60;
 
 export default async function HomePage() {
-  // 스페셜 태그(slug=seupesyeol)는 콤키 스페셜 섹션에만 노출 → 일반 흐름에서 제외
-  const posts = await getLatestPosts(50, "seupesyeol");
+  // 콤키 스페셜(seupesyeol) + 한입 정보(info)는 각자 별도 섹션에만 노출 → 일반 흐름 제외
+  const posts = await getLatestPosts(50, ["seupesyeol", "info"]);
 
   return (
     <main className="min-h-screen bg-white">
