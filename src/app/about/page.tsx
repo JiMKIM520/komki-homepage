@@ -43,20 +43,20 @@ export default function AboutPage() {
       {/* ── 헤드라인 (#FBF8F1 박스 + 큰 따옴표 4개, 박스 경계에 걸침) ── */}
       <section className="relative bg-[#FBF8F1] py-12 md:py-20">
         {/* 좌상단 큰 따옴표 두 개 (열기, stroke) — 위 경계에 절반 걸침 */}
-        <div className="absolute top-0 left-[20%] md:left-[22%] -translate-y-1/2 flex gap-0.5 md:gap-1">
+        <div className="absolute top-0 left-[20%] md:left-[22%] -translate-y-[30%] flex gap-0.5 md:gap-1">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/about/quote-open-stroke.svg"
             alt=""
             aria-hidden
-            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            className="w-3.5 md:w-6 h-auto select-none pointer-events-none"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/about/quote-open-stroke.svg"
             alt=""
             aria-hidden
-            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            className="w-3.5 md:w-6 h-auto select-none pointer-events-none"
           />
         </div>
 
@@ -68,20 +68,20 @@ export default function AboutPage() {
         </div>
 
         {/* 우하단 큰 따옴표 두 개 (닫기, fill) — 아래 경계에 절반 걸침 */}
-        <div className="absolute bottom-0 right-[20%] md:right-[22%] translate-y-1/2 flex gap-0.5 md:gap-1">
+        <div className="absolute bottom-0 right-[20%] md:right-[22%] translate-y-[30%] flex gap-0.5 md:gap-1">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/about/quote-close-fill.svg"
             alt=""
             aria-hidden
-            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            className="w-3.5 md:w-6 h-auto select-none pointer-events-none"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/about/quote-close-fill.svg"
             alt=""
             aria-hidden
-            className="w-3 md:w-5 h-auto select-none pointer-events-none"
+            className="w-3.5 md:w-6 h-auto select-none pointer-events-none"
           />
         </div>
       </section>
@@ -156,7 +156,7 @@ export default function AboutPage() {
                 </div>
 
                 {/* 카드 */}
-                <div className="flex-1 w-full bg-white rounded-xl shadow-[6px_6px_0_rgba(0,0,0,0.15)] overflow-hidden">
+                <div className="flex-1 w-full bg-white rounded-xl border border-black shadow-[6px_6px_0_rgba(0,0,0,0.15)] overflow-hidden">
                   {/* 검정 슬로건 바 */}
                   <div className="bg-black px-5 md:px-8 py-3 md:py-4">
                     <p className="font-paperlogy font-semibold text-sm md:text-lg text-[#FBF8F1] break-keep">
