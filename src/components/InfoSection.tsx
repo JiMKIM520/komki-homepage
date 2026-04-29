@@ -83,9 +83,9 @@ function Card({ item, mobile = false }: { item: CardData; mobile?: boolean }) {
       aria-label={item.title}
       className={`group block ${widthClass}`}
     >
-      {/* 썸네일 박스 — 4:5 세로 (콤키 스페셜과 동일 비율) */}
+      {/* 썸네일 박스 — 4:3 가로 */}
       <div
-        className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#FBF8F1] transition-transform group-hover:scale-[1.01] duration-300"
+        className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#FBF8F1] transition-transform group-hover:scale-[1.01] duration-300"
         style={item.bg ? { backgroundColor: item.bg } : undefined}
       >
         {item.image ? (
