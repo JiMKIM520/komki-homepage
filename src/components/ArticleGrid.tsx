@@ -13,8 +13,8 @@ export default function ArticleGrid({ posts }: { posts: GhostPost[] }) {
 
   return (
     <>
-      {/* 데스크톱: 3 컬럼 */}
-      <div className="hidden md:grid md:grid-cols-3 gap-x-8 gap-y-14">
+      {/* 데스크톱: 4 컬럼 */}
+      <div className="hidden md:grid md:grid-cols-4 gap-x-5 gap-y-10">
         {posts.map((post) => (
           <Link
             key={post.id}
@@ -28,7 +28,7 @@ export default function ArticleGrid({ posts }: { posts: GhostPost[] }) {
                   alt={post.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                  sizes="33vw"
+                  sizes="(max-width: 1024px) 25vw, 25vw"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-black/30 text-5xl font-black">
@@ -36,7 +36,7 @@ export default function ArticleGrid({ posts }: { posts: GhostPost[] }) {
                 </div>
               )}
             </div>
-            <h3 className="mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 text-left max-w-[80%] break-keep transition-colors group-hover:text-[#3F1C03]">
+            <h3 className="mt-3 font-paperlogy font-medium text-sm lg:text-base leading-snug text-black line-clamp-2 text-left break-keep transition-colors group-hover:text-[#3F1C03]">
               {post.title}
             </h3>
           </Link>

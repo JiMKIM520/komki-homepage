@@ -45,7 +45,7 @@ export default async function AdSection() {
         }));
 
   return (
-    <section className="py-14 md:py-20 bg-white">
+    <section className="py-9 md:py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* "콤키 스페셜" 알약 라벨 */}
         <div className="mb-6 md:mb-8">
@@ -54,15 +54,15 @@ export default async function AdSection() {
           </span>
         </div>
 
-        {/* 데스크톱: 3컬럼 그리드 */}
-        <div className="hidden md:grid md:grid-cols-3 gap-5">
+        {/* 데스크톱: 3컬럼 그리드 (LatestArticles와 동일 gap) */}
+        <div className="hidden md:grid md:grid-cols-3 gap-x-8 gap-y-10">
           {items.map((item) => (
             <Card key={item.key} item={item} />
           ))}
         </div>
 
-        {/* 모바일: 가로 스크롤, 한 카드씩 (옆 카드 살짝 보임) */}
-        <div className="md:hidden -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
+        {/* 모바일: 가로 스크롤 (LatestArticles와 동일 사이즈) */}
+        <div className="md:hidden -mx-4 px-4 flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
           {items.map((item) => (
             <Card key={item.key} item={item} mobile />
           ))}
@@ -73,7 +73,7 @@ export default async function AdSection() {
 }
 
 function Card({ item, mobile = false }: { item: CardData; mobile?: boolean }) {
-  const widthClass = mobile ? "snap-start shrink-0 w-[85%]" : "w-full";
+  const widthClass = mobile ? "snap-start shrink-0 w-[45%]" : "w-full";
 
   return (
     <Link
@@ -83,9 +83,9 @@ function Card({ item, mobile = false }: { item: CardData; mobile?: boolean }) {
       aria-label={item.title}
       className={`group block ${widthClass}`}
     >
-      {/* 썸네일 박스 — 4:5 세로 */}
+      {/* 썸네일 박스 — 4:5 세로, 모서리 각지게 (LatestArticles와 통일) */}
       <div
-        className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#FBF8F1] transition-transform group-hover:scale-[1.01] duration-300"
+        className="relative aspect-[4/5] overflow-hidden bg-[#FBF8F1] transition-transform group-hover:scale-[1.01] duration-300"
         style={item.bg ? { backgroundColor: item.bg } : undefined}
       >
         {item.image ? (
@@ -93,22 +93,31 @@ function Card({ item, mobile = false }: { item: CardData; mobile?: boolean }) {
             src={item.image}
             alt={item.title}
             fill
-            sizes="(max-width: 768px) 85vw, 33vw"
+            sizes={mobile ? "45vw" : "33vw"}
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
           item.label && (
-            <div className="absolute top-4 left-4 font-bungee text-[10px] md:text-xs uppercase tracking-widest text-white opacity-90">
+            <div className="absolute top-3 left-3 md:top-4 md:left-4 font-bungee text-[10px] md:text-xs uppercase tracking-widest text-white opacity-90">
               {item.label}
             </div>
           )
         )}
       </div>
 
-      {/* 제목 (썸네일 아래) */}
-      <h3 className="mt-3 md:mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 break-keep transition-colors group-hover:text-[#3F1C03]">
-        {item.title}
-      </h3>
+      {mobile ? (
+        // 모바일: 검정 박스 제목 (LatestArticles와 동일 — 3줄 기준 h-[72px])
+        <div className="bg-black px-3 py-3 h-[72px] flex items-start">
+          <h3 className="font-paperlogy font-medium text-xs text-[#FBF8F1] leading-snug line-clamp-3 break-keep">
+            {item.title}
+          </h3>
+        </div>
+      ) : (
+        // 데스크톱: 텍스트 아래
+        <h3 className="mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 text-left max-w-[80%] break-keep transition-colors group-hover:text-[#3F1C03]">
+          {item.title}
+        </h3>
+      )}
     </Link>
   );
 }

@@ -45,7 +45,7 @@ export default async function InfoSection() {
         }));
 
   return (
-    <section className="py-14 md:py-20 bg-[#FBF8F1]">
+    <section className="pt-9 md:pt-12 pb-14 md:pb-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* "한입 정보" 알약 라벨 */}
         <div className="mb-6 md:mb-8">
@@ -54,8 +54,8 @@ export default async function InfoSection() {
           </span>
         </div>
 
-        {/* 데스크톱: 3컬럼 그리드 */}
-        <div className="hidden md:grid md:grid-cols-3 gap-5">
+        {/* 데스크톱: 3컬럼 그리드 (LatestArticles와 동일 gap) */}
+        <div className="hidden md:grid md:grid-cols-3 gap-x-8 gap-y-10">
           {items.map((item) => (
             <Card key={item.key} item={item} />
           ))}
