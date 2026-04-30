@@ -65,14 +65,13 @@ export default async function ArticlePage({ params }: PageProps) {
 
   if (!post) notFound();
 
-  // 콤키 스페셜 섹션 + 더 읽어보기 섹션 두 갈래로 (메인 페이지와 동일 패턴)
-  // 더 읽어보기는 일반 흐름이므로 스페셜+한입정보 모두 제외
-  const [specialsRaw, latestRaw] = await Promise.all([
-    getPostsByTag("seupesyeol", 4),
-    getLatestPosts(10, ["seupesyeol", "info"]),
+  // 더 읽어보기 (스페셜 포함, 한입정보만 제외, 자기 제외) + 한입 정보 (3개 고정)
+  const [latestRaw, infosRaw] = await Promise.all([
+    getLatestPosts(15, "info"),
+    getPostsByTag("info", 4),
   ]);
-  const specials = specialsRaw.filter((p) => p.id !== post.id).slice(0, 3);
-  const more = latestRaw.filter((p) => p.id !== post.id).slice(0, 6);
+  const more = latestRaw.filter((p) => p.id !== post.id).slice(0, 9);
+  const infos = infosRaw.filter((p) => p.id !== post.id).slice(0, 3);
 
   const tag = post.tags?.[0];
   const author = post.authors?.[0];
@@ -136,33 +135,9 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       </article>
 
-      {/* 콤키 스페셜 섹션 — 4:3 가로 썸네일 (AdSection과 동일 패턴) */}
-      {specials.length > 0 && (
-        <section className="py-14 md:py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="mb-6 md:mb-8">
-              <span className="inline-flex items-center bg-black text-[#FBF8F1] text-sm md:text-base font-paperlogy font-semibold tracking-wide rounded-full px-5 py-2">
-                콤키 스페셜
-              </span>
-            </div>
-
-            <div className="hidden md:grid md:grid-cols-3 gap-5">
-              {specials.map((p) => (
-                <SpecialCard key={p.id} post={p} />
-              ))}
-            </div>
-            <div className="md:hidden -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
-              {specials.map((p) => (
-                <SpecialCard key={p.id} post={p} mobile />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 더 읽어보기 섹션 — 4:5 세로 썸네일 (ArticleGrid 패턴) */}
+      {/* 더 읽어보기 — 4:5 세로, 가로 스와이프 carousel (데스크톱+모바일 공통) */}
       {more.length > 0 && (
-        <section className="bg-[#FBF8F1] py-14 md:py-20">
+        <section className="bg-white py-14 md:py-20">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="mb-6 md:mb-8">
               <span className="inline-flex items-center bg-black text-[#FBF8F1] text-sm md:text-base font-paperlogy font-semibold tracking-wide rounded-full px-5 py-2">
@@ -170,14 +145,33 @@ export default async function ArticlePage({ params }: PageProps) {
               </span>
             </div>
 
-            <div className="hidden md:grid md:grid-cols-3 gap-x-8 gap-y-12">
-              {more.slice(0, 3).map((p) => (
+            <div className="-mx-4 md:mx-0 px-4 md:px-0 flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
+              {more.map((p) => (
                 <MoreCard key={p.id} post={p} />
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* 한입 정보 — 3:4 세로, 3개 고정 */}
+      {infos.length > 0 && (
+        <section className="bg-white py-14 md:py-20">
+          <div className="max-w-7xl mx-auto px-4 md:px-8">
+            <div className="mb-6 md:mb-8">
+              <span className="inline-flex items-center bg-black text-[#FBF8F1] text-sm md:text-base font-paperlogy font-semibold tracking-wide rounded-full px-5 py-2">
+                한입 정보
+              </span>
+            </div>
+
+            <div className="hidden md:grid md:grid-cols-3 gap-x-8">
+              {infos.map((p) => (
+                <InfoCard key={p.id} post={p} />
+              ))}
+            </div>
             <div className="md:hidden -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
-              {more.map((p) => (
-                <MoreCard key={p.id} post={p} mobile />
+              {infos.map((p) => (
+                <InfoCard key={p.id} post={p} mobile />
               ))}
             </div>
           </div>
@@ -189,18 +183,20 @@ export default async function ArticlePage({ params }: PageProps) {
   );
 }
 
-/* 콤키 스페셜 카드 — 4:3 가로 비율 + 텍스트 아래 */
-function SpecialCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
-  const widthClass = mobile ? "snap-start shrink-0 w-[85%]" : "w-full";
+/* 더 읽어보기 카드 — 4:5 세로 비율, 데스크톱은 한 화면 ~3개 / 모바일은 ~1.5개 */
+function MoreCard({ post }: { post: GhostPost }) {
   return (
-    <Link href={`/${post.slug}/`} className={`group block ${widthClass}`}>
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#FBF8F1]">
+    <Link
+      href={`/${post.slug}/`}
+      className="group block snap-start shrink-0 w-[60%] md:w-[calc((100%-2.5rem)/3)]"
+    >
+      <div className="relative aspect-[4/5] overflow-hidden">
         {post.feature_image ? (
           <Image
             src={post.feature_image}
             alt={post.title}
             fill
-            sizes="(max-width: 768px) 85vw, 33vw"
+            sizes="(max-width: 768px) 60vw, 33vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
@@ -209,19 +205,19 @@ function SpecialCard({ post, mobile = false }: { post: GhostPost; mobile?: boole
           </div>
         )}
       </div>
-      <h3 className="mt-3 md:mt-4 font-paperlogy font-medium text-base md:text-lg leading-snug text-black line-clamp-2 break-keep transition-colors group-hover:text-[#3F1C03]">
+      <h3 className="mt-3 md:mt-4 font-paperlogy font-medium text-sm md:text-base leading-snug text-black line-clamp-2 break-keep transition-colors group-hover:text-[#3F1C03]">
         {post.title}
       </h3>
     </Link>
   );
 }
 
-/* 더 읽어보기 카드 — 4:5 세로 비율 + 텍스트 아래 */
-function MoreCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
+/* 한입 정보 카드 — 3:4 세로 비율 */
+function InfoCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
   const widthClass = mobile ? "snap-start shrink-0 w-[60%]" : "w-full";
   return (
     <Link href={`/${post.slug}/`} className={`group block ${widthClass}`}>
-      <div className="relative aspect-[4/5] overflow-hidden">
+      <div className="relative aspect-[3/4] overflow-hidden">
         {post.feature_image ? (
           <Image
             src={post.feature_image}
