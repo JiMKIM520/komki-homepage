@@ -218,12 +218,12 @@ function MoreCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean 
   );
 }
 
-/* 한입 정보 카드 — 3:4 세로 비율 */
+/* 한입 정보 카드 — 4:3 가로 비율 */
 function InfoCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
-  const widthClass = mobile ? "snap-start shrink-0 w-[60%]" : "w-full";
+  const widthClass = mobile ? "snap-start shrink-0 w-[85%]" : "w-full";
   return (
     <Link href={`/${post.slug}/`} className={`group block ${widthClass}`}>
-      <div className="relative aspect-[3/4] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden">
         {post.feature_image ? (
           <Image
             src={post.feature_image}
