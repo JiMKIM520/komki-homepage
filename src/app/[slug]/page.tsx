@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import HorizontalCarousel from "@/components/HorizontalCarousel";
 import { getPostBySlug, getLatestPosts, getPostsByTag } from "@/lib/ghost";
 import type { GhostPost } from "@/lib/ghost-types";
 
@@ -135,7 +136,7 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
       </article>
 
-      {/* 더 읽어보기 — 4:5 세로 (데스크톱 grid 3-col 멀티-row / 모바일 가로 carousel) */}
+      {/* 더 읽어보기 — 4:5 세로, 가로 carousel (데스크톱 화살표 / 모바일 스와이프) */}
       {more.length > 0 && (
         <section className="bg-white py-14 md:py-20">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
@@ -145,19 +146,11 @@ export default async function ArticlePage({ params }: PageProps) {
               </span>
             </div>
 
-            {/* 데스크톱: grid 3-col, 모든 글 표시 */}
-            <div className="hidden md:grid md:grid-cols-3 gap-x-8 gap-y-12">
+            <HorizontalCarousel>
               {more.map((p) => (
                 <MoreCard key={p.id} post={p} />
               ))}
-            </div>
-
-            {/* 모바일: 가로 carousel, 모든 글 스와이프 가능 */}
-            <div className="md:hidden -mx-4 px-4 flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2">
-              {more.map((p) => (
-                <MoreCard key={p.id} post={p} mobile />
-              ))}
-            </div>
+            </HorizontalCarousel>
           </div>
         </section>
       )}
@@ -191,11 +184,13 @@ export default async function ArticlePage({ params }: PageProps) {
   );
 }
 
-/* 더 읽어보기 카드 — 4:5 세로 비율 (데스크톱 grid w-full / 모바일 carousel w-[60%]) */
-function MoreCard({ post, mobile = false }: { post: GhostPost; mobile?: boolean }) {
-  const widthClass = mobile ? "snap-start shrink-0 w-[60%]" : "w-full";
+/* 더 읽어보기 카드 — 4:5 세로 비율, 데스크톱 한 화면 ~3개 / 모바일 ~1.5개 */
+function MoreCard({ post }: { post: GhostPost }) {
   return (
-    <Link href={`/${post.slug}/`} className={`group block ${widthClass}`}>
+    <Link
+      href={`/${post.slug}/`}
+      className="group block snap-start shrink-0 w-[60%] md:w-[calc((100%-2.5rem)/3)]"
+    >
       <div className="relative aspect-[4/5] overflow-hidden">
         {post.feature_image ? (
           <Image
