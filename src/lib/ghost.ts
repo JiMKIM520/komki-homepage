@@ -99,6 +99,47 @@ export async function searchPosts(query: string, limit = 50): Promise<GhostPost[
   }
 }
 
+export async function getPostsBySlugs(
+  slugs: string[],
+  excludeTags?: string[]
+): Promise<GhostPost[]> {
+  if (slugs.length === 0) return [];
+  try {
+    const exclusions = excludeTags?.length
+      ? "+" + excludeTags.map((t) => `tag:-${t}`).join("+")
+      : "";
+    const filter = `visibility:public+slug:[${slugs.join(",")}]${exclusions}`;
+    const posts = await api.posts.browse({
+      limit: slugs.length,
+      include: ["tags", "authors"],
+      filter,
+      formats: ["plaintext"],
+      fields: [
+        "id",
+        "title",
+        "slug",
+        "url",
+        "excerpt",
+        "plaintext",
+        "feature_image",
+        "feature_image_alt",
+        "published_at",
+        "reading_time",
+        "visibility",
+      ],
+    });
+    const map = new Map(
+      (posts as unknown as GhostPost[]).map((p) => [p.slug, p])
+    );
+    return slugs
+      .map((s) => map.get(s))
+      .filter((p): p is GhostPost => !!p);
+  } catch (error) {
+    console.error("Ghost API getPostsBySlugs error:", error);
+    return [];
+  }
+}
+
 export async function getAllTags(): Promise<GhostTag[]> {
   try {
     const tags = await api.tags.browse({

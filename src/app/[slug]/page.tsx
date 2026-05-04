@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HorizontalCarousel from "@/components/HorizontalCarousel";
+import PostViewTracker from "@/components/PostViewTracker";
 import { getPostBySlug, getLatestPosts, getPostsByTag } from "@/lib/ghost";
 import type { GhostPost } from "@/lib/ghost-types";
 
@@ -81,6 +82,7 @@ export default async function ArticlePage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
+      <PostViewTracker slug={post.slug} />
 
       <article className="bg-white">
         <header className="max-w-3xl mx-auto px-4 md:px-8 pt-10 md:pt-16 pb-6 md:pb-8">
