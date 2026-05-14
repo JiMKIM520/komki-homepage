@@ -108,21 +108,15 @@ export type PostMetrics = {
 };
 
 /**
- * 최근 N일 published 글의 full metrics (email + 클릭/가입/유료전환/피드백).
+ * 전체 published 글의 full metrics (email + 클릭/가입/유료전환/피드백).
  * 발송 안 된 글도 포함 — 메트릭은 0으로.
  */
-export async function getPostsWithFullMetrics(
-  days = 30
-): Promise<PostMetrics[]> {
+export async function getPostsWithFullMetrics(): Promise<PostMetrics[]> {
   if (!adminClient) return [];
   try {
-    const cutoff = new Date();
-    cutoff.setUTCDate(cutoff.getUTCDate() - days);
-    const cutoffStr = cutoff.toISOString().slice(0, 10);
-
     const posts = (await adminClient.posts.browse({
-      limit: 50,
-      filter: `status:published+published_at:>'${cutoffStr}'`,
+      limit: "all",
+      filter: "status:published",
       include:
         "email,count.signups,count.paid_conversions,count.clicks,count.positive_feedback,count.negative_feedback",
     })) as AdminPostFull[];
@@ -304,17 +298,14 @@ export async function getTagStats(
       include: "count.posts",
     })) as AdminTag[];
 
-    // 2) 30일 published 글의 태그 매핑 (posts API에 include:tags)
+    // 2) 전체 published 글의 태그 매핑 (posts API에 include:tags)
     type PostWithTags = {
       slug: string;
       tags?: { slug: string }[];
     };
-    const cutoff = new Date();
-    cutoff.setUTCDate(cutoff.getUTCDate() - 30);
-    const cutoffStr = cutoff.toISOString().slice(0, 10);
     const recentPosts = (await adminClient.posts.browse({
-      limit: 50,
-      filter: `status:published+published_at:>'${cutoffStr}'`,
+      limit: "all",
+      filter: "status:published",
       include: "tags",
       fields: "slug",
     })) as PostWithTags[];

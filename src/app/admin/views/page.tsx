@@ -6,9 +6,7 @@ import {
   getPostsWithFullMetrics,
   getMemberStats,
   getMemberGrowth,
-  getScheduledPosts,
   getTagStats,
-  getWeekdayStats,
   type PostMetrics,
 } from "@/lib/ghost-admin";
 
@@ -42,30 +40,20 @@ export default async function AdminViewsPage({ searchParams }: PageProps) {
     ghostMetrics,
     members,
     growth,
-    scheduled,
   ] = await Promise.all([
     getTopPosts(30, 50),
     getDailyTotals(30),
     getDailyTotals(7),
-    getPostsWithFullMetrics(30),
+    getPostsWithFullMetrics(),
     getMemberStats(),
     getMemberGrowth(),
-    getScheduledPosts(),
   ]);
 
   const metricsBySlug = new Map<string, PostMetrics>(
     ghostMetrics.map((m) => [m.slug, m])
   );
 
-  // 태그별 + 요일별 통계는 fullMetrics 의존 → 위 fetch 후 계산
-  const [tagStats, weekdayStats] = await Promise.all([
-    getTagStats(ghostMetrics),
-    Promise.resolve(getWeekdayStats(ghostMetrics)),
-  ]);
-  const maxWeekdayRate = Math.max(
-    0.01,
-    ...weekdayStats.map((w) => w.avgOpenRate)
-  );
+  const tagStats = await getTagStats(ghostMetrics);
 
   const slugSet = new Set(topRaw.map((t) => t.slug));
   if (detailSlug) slugSet.add(detailSlug);
@@ -74,12 +62,9 @@ export default async function AdminViewsPage({ searchParams }: PageProps) {
 
   // 어제 페이지뷰 (오늘 제외 가장 최근 일자)
   const yesterday = daily30.length >= 2 ? daily30[daily30.length - 2] : null;
-  const today = daily30.length >= 1 ? daily30[daily30.length - 1] : null;
   const total30 = daily30.reduce((sum, d) => sum + d.total, 0);
   const total7 = daily7.reduce((sum, d) => sum + d.total, 0);
   const avgDaily = daily30.length > 0 ? Math.round(total30 / daily30.length) : 0;
-
-  const maxDaily = Math.max(1, ...daily30.map((d) => d.total));
 
   const detail = detailSlug
     ? {
@@ -101,7 +86,7 @@ export default async function AdminViewsPage({ searchParams }: PageProps) {
             페이지뷰 대시보드
           </h1>
           <p className="mt-2 font-paperlogy text-sm md:text-base text-[#3F1C03]">
-            Upstash Redis 일별 zset 기반 · UTC 기준 · 최근 30일
+            페이지뷰 30일 (Upstash) · Ghost 메트릭 전체 기간
           </p>
         </header>
 
@@ -150,96 +135,6 @@ export default async function AdminViewsPage({ searchParams }: PageProps) {
             />
           </div>
         </section>
-
-        {/* 일별 trend (사이트 전체) */}
-        <section className="mb-8 md:mb-12">
-          <h2 className="font-paperlogy font-semibold text-lg md:text-2xl text-black mb-4">
-            일별 페이지뷰 — 사이트 전체
-          </h2>
-          <DailyBarChart data={daily30} max={maxDaily} />
-          {today && (
-            <p className="mt-2 font-paperlogy text-xs text-black/50">
-              오늘({formatDate(today.date)})은 진행 중 — {today.total} 뷰
-            </p>
-          )}
-        </section>
-
-        {/* 예약 발송 */}
-        {scheduled.length > 0 && (
-          <section className="mb-8 md:mb-12">
-            <h2 className="font-paperlogy font-semibold text-lg md:text-2xl text-black mb-4">
-              예약 발송 ({scheduled.length})
-            </h2>
-            <div className="bg-white border border-black/10 rounded-lg overflow-hidden">
-              <ul className="divide-y divide-black/10">
-                {scheduled.map((s) => (
-                  <li
-                    key={s.id}
-                    className="px-4 md:px-5 py-3 flex items-center justify-between gap-3"
-                  >
-                    <span className="font-paperlogy text-sm md:text-base text-black break-keep flex-1 min-w-0 truncate">
-                      {s.title}
-                    </span>
-                    <span className="font-paperlogy text-xs md:text-sm text-black/60 shrink-0 tabular-nums">
-                      {s.scheduledAt
-                        ? new Date(s.scheduledAt).toLocaleString("ko-KR", {
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })
-                        : "-"}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )}
-
-        {/* 요일별 평균 오픈율 */}
-        {weekdayStats.some((w) => w.postCount > 0) && (
-          <section className="mb-8 md:mb-12">
-            <h2 className="font-paperlogy font-semibold text-lg md:text-2xl text-black mb-4">
-              요일별 평균 오픈율
-            </h2>
-            <div className="bg-white border border-black/10 rounded-lg p-4 md:p-5">
-              <div className="flex items-end gap-2 md:gap-3 h-32 md:h-40">
-                {weekdayStats.map((w) => {
-                  const h = (w.avgOpenRate / maxWeekdayRate) * 100;
-                  const has = w.postCount > 0;
-                  return (
-                    <div
-                      key={w.weekday}
-                      className="flex-1 flex flex-col items-center justify-end group relative"
-                      title={`${w.label}: ${w.postCount}편 / 평균 ${(w.avgOpenRate * 100).toFixed(1)}%`}
-                    >
-                      <div
-                        className={`w-full rounded-t-sm transition-opacity group-hover:opacity-70 ${has ? "bg-black" : "bg-black/10"}`}
-                        style={{ height: `${has ? Math.max(h, 4) : 2}%` }}
-                      />
-                      <span className="absolute -top-5 left-1/2 -translate-x-1/2 hidden group-hover:block bg-black text-[#FBF8F1] text-[10px] md:text-xs px-1.5 py-0.5 rounded font-paperlogy whitespace-nowrap z-10">
-                        {has
-                          ? `${(w.avgOpenRate * 100).toFixed(1)}% · ${w.postCount}편`
-                          : "데이터 없음"}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="flex justify-between mt-2 font-paperlogy text-[10px] md:text-xs text-black/40">
-                {weekdayStats.map((w) => (
-                  <span key={w.weekday} className="flex-1 text-center">
-                    {w.label}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <p className="mt-2 font-paperlogy text-xs text-black/40">
-              최근 30일 newsletter 발송 글 기준 · UTC 요일
-            </p>
-          </section>
-        )}
 
         {/* 태그별 성과 */}
         {tagStats.length > 0 && (
@@ -300,7 +195,7 @@ export default async function AdminViewsPage({ searchParams }: PageProps) {
               </table>
             </div>
             <p className="mt-2 font-paperlogy text-xs text-black/40">
-              평균 오픈율/클릭/가입은 최근 30일 newsletter 발송 글 기준
+              평균 오픈율/클릭/가입은 전체 newsletter 발송 글 기준
             </p>
           </section>
         )}
