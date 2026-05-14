@@ -61,3 +61,76 @@ export async function getTopPosts(
     return [];
   }
 }
+
+export type DailyTotal = { date: string; total: number };
+
+/**
+ * 최근 N일 사이트 전체 일별 페이지뷰 합계 (오래된 → 최신 순).
+ */
+export async function getDailyTotals(days = 30): Promise<DailyTotal[]> {
+  const client = redis;
+  if (!client) return [];
+  try {
+    const now = new Date();
+    const dates: string[] = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(now);
+      d.setUTCDate(d.getUTCDate() - i);
+      dates.push(d.toISOString().slice(0, 10));
+    }
+
+    const results = await Promise.all(
+      dates.map((date) =>
+        client.zrange(`views:${date}`, 0, -1, { withScores: true })
+      )
+    );
+
+    return dates.map((date, idx) => {
+      const entries = results[idx];
+      let total = 0;
+      if (Array.isArray(entries)) {
+        for (let i = 1; i < entries.length; i += 2) {
+          total += Number(entries[i] ?? 0);
+        }
+      }
+      return { date, total };
+    });
+  } catch (error) {
+    console.error("getDailyTotals error:", error);
+    return [];
+  }
+}
+
+export type DailyViews = { date: string; views: number };
+
+/**
+ * 특정 글의 최근 N일 일별 페이지뷰 (오래된 → 최신 순).
+ */
+export async function getViewsByDay(
+  slug: string,
+  days = 30
+): Promise<DailyViews[]> {
+  const client = redis;
+  if (!client) return [];
+  try {
+    const now = new Date();
+    const dates: string[] = [];
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(now);
+      d.setUTCDate(d.getUTCDate() - i);
+      dates.push(d.toISOString().slice(0, 10));
+    }
+
+    const scores = await Promise.all(
+      dates.map((date) => client.zscore(`views:${date}`, slug))
+    );
+
+    return dates.map((date, idx) => ({
+      date,
+      views: Number(scores[idx] ?? 0),
+    }));
+  } catch (error) {
+    console.error("getViewsByDay error:", error);
+    return [];
+  }
+}
