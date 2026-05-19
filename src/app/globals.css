@@ -408,3 +408,104 @@ html {
   margin: 0;
   border-radius: 0;
 }
+
+/* ── Callout 카드 (정보 박스) ───────────────────────── */
+.komki-prose .kg-callout-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75em;
+  padding: 1em 1.2em;
+  border-radius: 0.5rem;
+  background: #FBF8F1;
+  border: 1px solid #000;
+}
+.komki-prose .kg-callout-emoji {
+  font-size: 1.15em;
+  line-height: 1.5;
+}
+.komki-prose .kg-callout-text {
+  flex: 1;
+  color: #3F1C03;
+}
+.komki-prose .kg-callout-text:last-child {
+  margin: 0;
+}
+/* Ghost 색상 변형 — komki 톤에 맞춰 배경만 부드럽게 */
+.komki-prose .kg-callout-card-blue { background: #EEF3FB; }
+.komki-prose .kg-callout-card-green { background: #EEF7F0; }
+.komki-prose .kg-callout-card-yellow { background: #FBF6E8; }
+.komki-prose .kg-callout-card-red { background: #FBEEEE; }
+.komki-prose .kg-callout-card-pink { background: #FBEEF5; }
+.komki-prose .kg-callout-card-purple { background: #F2EEFB; }
+.komki-prose .kg-callout-card-grey { background: #F2F2F2; }
+.komki-prose .kg-callout-card-accent { background: #3F1C03; }
+.komki-prose .kg-callout-card-accent .kg-callout-text { color: #FBF8F1; }
+
+/* ── Button 카드 ──────────────────────────────────── */
+.komki-prose .kg-button-card {
+  display: flex;
+}
+.komki-prose .kg-button-card.kg-align-center { justify-content: center; }
+.komki-prose .kg-button-card.kg-align-left { justify-content: flex-start; }
+.komki-prose .kg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7em 1.6em;
+  border-radius: 9999px;
+  font-family: var(--font-paperlogy), sans-serif;
+  font-weight: 600;
+  font-size: 0.95em;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.komki-prose .kg-btn:hover { opacity: 0.8; }
+.komki-prose .kg-btn-accent {
+  background: #000;
+  color: #FBF8F1;
+}
+
+/* ── Toggle 카드 (펼침/접힘) ────────────────────────── */
+.komki-prose .kg-toggle-card {
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  padding: 1em 1.2em;
+}
+.komki-prose .kg-toggle-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  cursor: pointer;
+}
+.komki-prose .kg-toggle-heading-text {
+  margin: 0;
+  font-size: 1.05em;
+}
+.komki-prose .kg-toggle-card-icon {
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #000;
+  transition: transform 0.2s ease;
+}
+.komki-prose .kg-toggle-card-icon svg {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.komki-prose .kg-toggle-card[data-kg-toggle-state="open"] .kg-toggle-card-icon {
+  transform: rotate(180deg);
+}
+.komki-prose .kg-toggle-content {
+  margin-top: 0.9em;
+}
+.komki-prose .kg-toggle-card[data-kg-toggle-state="close"] .kg-toggle-content {
+  display: none;
+}
+.komki-prose .kg-toggle-content > :first-child { margin-top: 0; }
+.komki-prose .kg-toggle-content > :last-child { margin-bottom: 0; }

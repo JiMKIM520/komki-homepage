@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HorizontalCarousel from "@/components/HorizontalCarousel";
 import PostViewTracker from "@/components/PostViewTracker";
+import GhostContentEnhancer from "@/components/GhostContentEnhancer";
 import { getPostBySlug, getLatestPosts, getPostsByTag } from "@/lib/ghost";
 import type { GhostPost } from "@/lib/ghost-types";
 
@@ -135,6 +136,7 @@ export default async function ArticlePage({ params }: PageProps) {
             className="komki-prose"
             dangerouslySetInnerHTML={{ __html: post.html ?? "" }}
           />
+          <GhostContentEnhancer />
         </div>
       </article>
 
