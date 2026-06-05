@@ -376,6 +376,19 @@ html {
 .komki-prose .kg-embed-card {
   margin: 1.8em 0;
 }
+
+/* Embed (YouTube 등) — Ghost가 width="200" height="113"을 하드코딩해 보내므로
+   본문 너비를 가득 채우고 16:9 비율로 강제 */
+.komki-prose .kg-embed-card {
+  display: block;
+}
+.komki-prose .kg-embed-card iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  display: block;
+  margin: 0;
+}
 .komki-prose .kg-bookmark-container {
   display: flex;
   text-decoration: none;
