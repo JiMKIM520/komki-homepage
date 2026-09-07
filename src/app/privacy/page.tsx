@@ -70,12 +70,16 @@ export default function PrivacyPage() {
 
           <h2>3. 개인정보의 보유 및 이용 기간</h2>
           <p>
-            회사는 개인정보 수집·이용 목적이 달성된 후에는 해당 정보를 지체
-            없이 파기합니다. 구체적으로 이메일 주소는 <strong>뉴스레터 수신동의를
-            철회(구독 해지)한 때</strong>까지 보유하며, 철회 시 지체 없이 파기합니다.
+            이메일 주소는 <strong>뉴스레터 수신동의를 철회(구독 해지)한 때</strong>
+            까지 보유합니다. 철회 의사가 확인되면 뉴스레터 발송은 즉시
+            중단하며, 이메일 주소는 지체 없이, 늦어도 <strong>철회일로부터
+            5일 이내</strong>에 파기합니다.
           </p>
           <p>
-            {"{확인 필요: 철회 후 실제 파기까지 소요되는 구체적 기간(예: 철회 후 O일 이내)을 운영 정책으로 확정해 명시}"}
+            다만 파기 이후 동일 주소로 뉴스레터가 재발송되는 것을 막기 위해,
+            이메일 주소 자체는 삭제하되 재수신 방지에 필요한 최소한의
+            식별정보(이메일 해시 등)는 별도로 보관합니다. 이 정보는 재수신
+            방지 목적 외에는 이용하지 않습니다.
           </p>
 
           <h2>4. 개인정보의 제3자 제공</h2>
@@ -110,11 +114,45 @@ export default function PrivacyPage() {
 
           <h2>6. 개인정보의 국외 이전</h2>
           <p>
-            위 제5조의 수탁업체는 해외에 서버를 두고 있을 수 있어, 이 경우
-            이용자의 개인정보가 국외로 이전되어 처리될 수 있습니다.
+            회사는 서비스 운영을 위해 아래와 같이 이용자의 개인정보를
+            국외로 이전하고 있습니다.
           </p>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-sm md:text-base">
+              <thead>
+                <tr className="border-b-2 border-black">
+                  <th className="text-left py-2 pr-4 font-semibold">이전받는 자</th>
+                  <th className="text-left py-2 pr-4 font-semibold">이전 국가</th>
+                  <th className="text-left py-2 pr-4 font-semibold">이전 항목</th>
+                  <th className="text-left py-2 pr-4 font-semibold">이전 일시 및 방법</th>
+                  <th className="text-left py-2 pr-4 font-semibold">이전 목적</th>
+                  <th className="text-left py-2 font-semibold">보유·이용 기간</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-black/15">
+                  <td className="py-2 pr-4 align-top">Ghost Foundation (Ghost(Pro))</td>
+                  <td className="py-2 pr-4 align-top">네덜란드</td>
+                  <td className="py-2 pr-4 align-top">이메일 주소</td>
+                  <td className="py-2 pr-4 align-top">구독 신청 시 API를 통해 실시간 전송</td>
+                  <td className="py-2 pr-4 align-top">뉴스레터 발송 대행</td>
+                  <td className="py-2 align-top">위 제3조와 동일</td>
+                </tr>
+                <tr className="border-b border-black/15">
+                  <td className="py-2 pr-4 align-top">Vercel Inc.</td>
+                  <td className="py-2 pr-4 align-top">미국</td>
+                  <td className="py-2 pr-4 align-top">이메일 주소를 포함해 서비스 이용 과정에서 발생하는 정보</td>
+                  <td className="py-2 pr-4 align-top">웹사이트 접속 시 요청 처리 과정에서 실시간 처리</td>
+                  <td className="py-2 pr-4 align-top">웹사이트 호스팅 및 서버 운영</td>
+                  <td className="py-2 align-top">위 제3조와 동일</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <p>
-            {"{확인 필요: Ghost(Pro)의 실제 데이터 처리 국가, Vercel 배포 리전을 확인한 뒤 이전 항목·이전 국가·이전 일시 및 방법·이전받는 자의 개인정보 보유·이용 기간을 구체적으로 명시}"}
+            이용자는 개인정보의 국외 이전을 원하지 않으실 경우 뉴스레터
+            구독을 신청하지 않거나 제7조의 방법으로 수신동의를 철회하실 수
+            있습니다.
           </p>
 
           <h2>7. 정보주체의 권리·의무 및 행사 방법</h2>
@@ -140,7 +178,7 @@ export default function PrivacyPage() {
           <ul>
             <li>회사: 사단법인 한국마케팅진흥원</li>
             <li>성명: 김가은</li>
-            <li>연락처: {"{확인 필요: 개인정보 보호책임자 전화번호·이메일}"}</li>
+            <li>연락처: 02-743-7310 · <a href="mailto:info@marketing.or.kr">info@marketing.or.kr</a></li>
             <li>서비스 문의: <a href="mailto:info@komki.co.kr">info@komki.co.kr</a></li>
           </ul>
 
@@ -159,9 +197,7 @@ export default function PrivacyPage() {
             사단법인 한국마케팅진흥원 · 대표 김영선 · 사업자등록번호
             569-82-00086
             <br />
-            {"{확인 필요: 사업자등록상 주소가 한국마케팅진흥원 홈페이지 표기(서울시 중구 퇴계로 212-13 2층)와 콤키 표기 주소(서울시 종로구 종로 325, 글라스타워 702호)가 서로 달라 어느 쪽을 처리방침에 표기할지 확정 필요 — 우선 콤키 표기 주소를 사용}"}
-            <br />
-            서울시 종로구 종로 325, 글라스타워 702호 · 대표전화 02-743-7310 ·
+            서울특별시 중구 퇴계로 212-13 2층 · 대표전화 02-743-7310 ·
             이메일 <a href="mailto:info@komki.co.kr">info@komki.co.kr</a>
           </p>
         </div>
