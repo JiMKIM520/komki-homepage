@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 type SubscribeFormProps = {
   source?: "hero" | "footer" | "inline";
@@ -154,6 +155,14 @@ export default function SubscribeForm({
             onChange={setConsentMarketing}
             label="광고성 정보수신 동의 (필수)"
           />
+          <Link
+            href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-paperlogy text-xs text-[#3F1C03]/70 underline underline-offset-2 hover:text-[#3F1C03] transition-colors"
+          >
+            개인정보 처리방침 보기
+          </Link>
         </div>
 
         {/* 구독하기 버튼 */}
